@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/practica.css">
+    <script src="./scripts/javascript.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li id="ej1">ComparaTextos</li>
+            <li id="ej2">CuentaLetras</li>
+            <li id="ej3">RaizCuadrada</li>
+            <li id="ej4">Concatenatextos</li>
+            <li id="ej5">CambiaColor</li>
+            <li id="ej6">TheGoat</li>
+            <li id="ej7">AdivinaAdivinanza</li>
+        </ul>
+    </header>
+    <div id="container">
+
+        <div class="ejercicio" id="ejercicio1">
+
+            <h1> Comparador de textos</h1>
+
+            <div class="container_ej">
+                <input type="text" id="ej_1_in_1" name="texto1" value="">
+                <div id="ejercicio1_simbolo"> = </div>
+                <input type="text" id="ej_1_in_2" name="texto2" value="">
+            </div>
+        </div>
+
+        <div class="ejercicio" id="ejercicio2">
+            <h1> Contar hasta 30 letras</h1>
+
+            <div class="container_ej">
+                <input type="text" id="ej_2_in_1" name="texto3" value="" size="30" maxlength="30">
+                <div id="ej_2_num"> </div>
+                <p> letras </p>
+            </div>
+        </div>
+
+        <div class="ejercicio" id="ejercicio3">
+            <h1> Raiz cuadrada</h1>
+
+            <div class="container_ej">
+                <input type="number" id="ej_3_in_1" name="texto3" value="" placeholder="numero">
+                <div> = </div>
+                <div id="ej_3_res"> </div>
+            </div>
+        </div>
+
+        <div class="ejercicio" id="ejercicio4">
+            <h1> Concatena textos</h1>
+
+            <div class="container_ej">
+                <input type="text" id="ej_4_in_1" name="texto3" value="">
+                <p> + </p>
+                <input type="text" id="ej_4_in_2" name="texto3" value="">
+                <p> = </p>
+                <div id="ej_4_res"> </div>
+            </div>
+        </div>
+
+        <div class="ejercicio" id="ejercicio5">
+            <h1> Cambio de color del header y footer</h1>
+
+            <div class="container_ej vertical">
+                <div><input type="radio" id="ej_5_in_1" name="ej_5_in_1"> <label for="ej_5_in_1">verde</label></div>
+                <div><input type="radio" id="ej_5_in_2" name="ej_5_in_2" checked> <label for="ej_5_in_2">azul</label>
+                </div>
+                <div><input type="radio" id="ej_5_in_3" name="ej_5_in_3"> <label for="ej_5_in_3">rojo</label></div>
+            </div>
+        </div>
+
+        <div class="ejercicio" id="ejercicio6">
+            <h1> Cambio de tamaño</h1>
+            <div class="container_ej expand" >
+                <div class="container_ej" id="cont_6">
+                    <div class="ej_6_con_1 vertical">
+                        <div>
+                            <label for="ej_6_in_1">altura</label>
+                            <input type="number" id="ej_6_in_1" name="ej_6_in_1" value="">
+                        </div>
+                        <div>
+                            <label for="ej_6_in_2">ancho</label>
+                            <input type="number" id="ej_6_in_2" name="ej_6_in_2" value="">
+                        </div>
+                    </div>
+                    
+                    <img id="ej_6_img" src="./img/Hausziege_04.jpg" alt="LaCabra">
+                </div>
+                
+                
+            </div>
+
+
+        </div>
+
+
+        <div class="ejercicio" id="ejercicio7">
+            <h1> Adivina la palabra</h1>
+    
+            <div class="container_ej">
+                <input type="text" id="ej_7_in_1" name="palabra" value="">
+                <p id="ej_7_tip">Has hacertado <span id="ej_7_res"> 0 </span> letras</p>
+                <p id="ej_7_congrats">Felicidades, has acertado la palabra</p>
+            </div>
+    
+        </div>
+
+    </div>
+
+
+    </div>
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

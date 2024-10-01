@@ -1,0 +1,123 @@
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+header {
+    height: 10vh;
+    background-color: #0000ff;
+}
+
+footer {
+    height: 10vh;
+    background-color: #0000ff;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    padding-right: 40%;
+    padding-left: 5%;
+    align-items: center;
+    height: 100%;
+
+}
+
+li {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    padding: 16px;
+}
+
+li:hover {
+
+    background-color: rgba(255, 255, 255, 0.425);
+    cursor: pointer;
+    box-shadow: 5px 5px 20px black;
+}
+h1,p{
+    margin: 0px;
+    padding: 5px;
+}
+
+#container {
+    margin: 0vh 5vh 0vh 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 80vh;
+}
+
+.ejercicio {
+    height: fit-content;
+    min-height: 15vh;
+    width: 40vw;
+    flex-direction: column;
+    justify-content: left;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.5s ease;
+    
+}
+
+.container_ej {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5px;
+}
+
+#ejercicio1 {
+    display: flex;
+}
+
+#ejercicio1_simbolo {
+    margin: 0px 10px 0px 10px;
+}
+
+#ej_2_num {
+    margin: 0% 5% 0% 5%;
+    min-width: 10px;
+}
+
+#ej_3_res {
+    margin: 0% 5% 0% 5%;
+    min-width: 10px;
+}
+
+#ej_4_res {
+    margin: 0% 5% 0% 5%;
+    min-width: 10px;
+}
+
+.ej_6_con_1>* {
+    display: flex;
+    flex-direction: column;
+}
+
+#ej_6_img {
+    height: 78px;
+    width: auto;
+    padding: 0px;
+}
+
+.expand {
+    flex-grow: 1;
+}
+
+#ejercicio6 {
+    display: flex;
+}
+
+#ej_7_congrats {
+    display: none;
+}
