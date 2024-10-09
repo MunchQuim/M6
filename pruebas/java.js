@@ -1,4 +1,4 @@
-const persona = {
+/* const persona = {
     nombre: 'Juan',
     apellido: 'Perez',
     edad: 20,
@@ -24,4 +24,4 @@ const{nombre, apellido, edad, direcciones} = persona;
 console.log(nombre); // aqui nombre es el nombre de persona
 nombre = persona;
 console.log(nombre); // aqui nombre ES persona
-console.log(direcciones.map(elemento => elemento.ciudad))
+console.log(direcciones.map(elemento => elemento.ciudad)) */
