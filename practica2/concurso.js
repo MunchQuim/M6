@@ -2,19 +2,21 @@
 let nombre;
 let ronda = 0;
 let rondaMax = 0;
-//recoger datos del quiz
+let preguntasRecogidas = 10;
+let preguntasMostradas = 4;
 let listadoQuiz = [];
 let listadoPostQuiz = [];
 let listadoDivQuiz = [];
 let correctas = 0;
 let incorrectas = 0;
 async function prepararPreguntas() {
-    let response = await fetch("https://the-trivia-api.com/api/questions?limit=10&categories=general_knowledge");
+    let response = await fetch("https://the-trivia-api.com/api/questions?limit=" + preguntasRecogidas + "&categories=general_knowledge");
     listadoQuiz = await response.json();
     console.log(listadoQuiz);
     let contadorPreguntas = 0;
     let contadorRondas = 0;
-    listadoQuiz.forEach(element => {
+    for (let index = 0; index < preguntasMostradas; index++) {
+        let element = listadoQuiz[index];
 
         let containerQuestion = document.createElement('div');
         containerQuestion.id = "ContainerQuestion" + contadorRondas;
@@ -74,7 +76,7 @@ async function prepararPreguntas() {
         if (contadorPreguntas % 2 == 0) {
             contadorRondas += 1;
         }
-    });
+    }
     rondaMax = contadorRondas - 1;
 
     for (let index = 0; index < listadoDivQuiz.length; index += 2) {
@@ -160,13 +162,12 @@ function pasarRonda() {
 
 function perder() {
 
-    document.getElementById("gameOver").style.display = "block";
+    document.getElementById("gameOver").style.display = "flex";
     guardarDatos(nombre, correctas, false);
 }
 
 function ganar() {
-    document.getElementById("mainContent").style.display = "none";
-    document.getElementById("congratulations").style.display = "block"; ç
+    document.getElementById("congratulations").style.display = "flex";
     guardarDatos(nombre, correctas, true);
 }
 
@@ -178,3 +179,12 @@ function guardarDatos(pNombre, pCorrectas, pGanado) {
         haGanado: pGanado
     };
 }
+function reiniciar() {
+    window.location.reload();
+}
+
+let reiniciares = document.querySelectorAll("#btnReiniciar");
+
+reiniciares.forEach(element => {
+    element.addEventListener('click', reiniciar, false);
+});

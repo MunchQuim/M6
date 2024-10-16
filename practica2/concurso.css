@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     height: 100vh;
     margin: 0px;
+    overflow: hidden;
 }
 
 #mainContent {
@@ -12,6 +13,7 @@ body {
     flex-direction: column;
     background-color: rgb(0, 0, 0, 0.7);
     color: white;
+    overflow-y: scroll;
 }
 
 header,
@@ -101,9 +103,21 @@ footer {
     cursor: pointer;
     margin-bottom: 20px;
 }
+#btnReiniciar{
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: fit-content;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+}
 #gameOver{
     display: none;
+    align-items: center;
+    flex-direction: column;
 }
 #congratulations{
     display: none;
+    align-items: center;
+    flex-direction: column;
 }
