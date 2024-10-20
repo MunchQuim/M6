@@ -101,7 +101,8 @@ footer {
     border-radius: 10px;
     display: none;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
+    user-select: none;
 }
 #btnReiniciar{
     padding: 15px;

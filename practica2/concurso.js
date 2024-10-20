@@ -9,12 +9,14 @@ let listadoPostQuiz = [];
 let listadoDivQuiz = [];
 let correctas = 0;
 let incorrectas = 0;
+let btnActivo = false;
 async function prepararPreguntas() {
     let response = await fetch("https://the-trivia-api.com/api/questions?limit=" + preguntasRecogidas + "&categories=general_knowledge");
     listadoQuiz = await response.json();
     console.log(listadoQuiz);
     let contadorPreguntas = 0;
     let contadorRondas = 0;
+    //preparo las preguntas y respuestas
     for (let index = 0; index < preguntasMostradas; index++) {
         let element = listadoQuiz[index];
 
@@ -78,7 +80,7 @@ async function prepararPreguntas() {
         }
     }
     rondaMax = contadorRondas - 1;
-
+    //preparo las rondas
     for (let index = 0; index < listadoDivQuiz.length; index += 2) {
         let containerRonda = document.createElement("div");
         containerRonda.className = "ronda " + "ronda" + (index / 2);
@@ -89,6 +91,13 @@ async function prepararPreguntas() {
         containerRonda.appendChild(listadoDivQuiz[index + 1]);
         document.getElementById("containerQuiz").appendChild(containerRonda);
     }
+    //añado eventos a los input para activar corregir
+    let radioNameArray = document.querySelectorAll('input[type="radio"]');
+    radioNameArray.forEach(radio => {
+        radio.addEventListener("change", activarCorregir, false);
+    });
+  
+
     /*     for (let index = 1; index < rondaMax; index++) {
             let containersQuestion = document.querySelectorAll("#ContainerQuestion" + index);
             containersQuestion.forEach(element => {
@@ -99,6 +108,28 @@ async function prepararPreguntas() {
     return listadoQuiz;
 
 }
+function activarCorregir() {
+    
+    let activos = document.querySelectorAll('input[type="radio"]:checked:not([disabled])').length;
+    console.log(activos);
+    let btnCorregir = document.getElementById("corregir");
+    if (activos > 0 && activos % 2 == 0) {
+        /* btnActivo = true; */
+        btnCorregir.addEventListener("click", corregir, false);
+        btnCorregir.style.color = "white";
+    }
+    else {
+        btnCorregir.removeEventListener("click", corregir, false);
+        btnCorregir.style.color = "gray";
+        /*  btnActivo = false; */
+    }
+    /*     if(btnActivo){
+    
+        } */
+}
+  //preparo el boton
+  activarCorregir();
+
 /* listadoPostQuiz = prepararPreguntas(); */
 prepararPreguntas();
 
@@ -112,40 +143,46 @@ function guardarNombre() {
     }
 }
 
-document.getElementById("corregir").addEventListener("click", corregir, false);
+
 
 function corregir() {
     //mire si he acertado las preguntas de la ronda actual
     let radioNameArray = document.querySelectorAll('input[type="radio"]:checked:not([disabled])');
-    radioNameArray.forEach(radio => {
+    console.log(radioNameArray.length);
+    if (radioNameArray.length % 2 == 0 && radioNameArray.length > 0) {
+        radioNameArray.forEach(radio => {
 
-        let radioName = radio.name;
-        listadoQuiz.forEach(element => {
-            if (element['id'] == radioName) {
-                // me cambie el color segun acierte o no
-                if (radio.nextElementSibling.textContent == element['correctAnswer']) {
-                    radio.nextElementSibling.style.color = "green";
-                    correctas += 1;
-                } else {
-                    radio.nextElementSibling.style.color = "red";
-                    incorrectas -= 1;
+            let radioName = radio.name;
+            listadoQuiz.forEach(element => {
+                if (element['id'] == radioName) {
+                    // me cambie el color segun acierte o no
+                    if (radio.nextElementSibling.textContent == element['correctAnswer']) {
+                        radio.nextElementSibling.style.color = "green";
+                        correctas += 1;
+                    } else {
+                        radio.nextElementSibling.style.color = "red";
+                        incorrectas -= 1;
+                    }
                 }
-            }
+            });
+            //me bloquee los botones de la ronda actual
+            document.getElementsByName(radioName).forEach(element => {
+                element.disabled = true;
+            });
         });
-        //me bloquee los botones de la ronda actual
-        document.getElementsByName(radioName).forEach(element => {
-            element.disabled = true;
-        });
-    });
-    if (correctas % 2 == 0 && correctas > 0) {
-        pasarRonda();
-    }
-    else {
-        perder();
+        if (correctas % 2 == 0 && correctas > 0) {
+            pasarRonda();
+        }
+        else {
+            perder();
+        }
+
+        //preparo el boton
+        activarCorregir();
+
+        //si he acertado todas paso de ronda, si no pierdo
     }
 
-
-    //si he acertado todas paso de ronda, si no pierdo
 }
 function pasarRonda() {
 
