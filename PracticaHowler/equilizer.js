@@ -7,7 +7,7 @@ let duration;
 
 
 let playList = [];
-let currentTrack = [];
+let currentTrack = 0;
 
 let isSecondsActive = false;
 //Equalizer
@@ -27,8 +27,10 @@ async function enseñarCanciones() {
     let songList = document.getElementById("songList");
 
     playList.forEach(song => {
-        let songDiv = document.createElement("div");
-        songDiv.innerText = song["title"];
+        let songDiv = document.createElement("img");
+        songDiv.innerText = song["image"];
+        songDiv.src = song["image"];
+        songDiv.setAttribute('data-index',playList.indexOf(song))
         songDiv.addEventListener("click", () => {
             //pone la foto
             ponerFoto(song["image"]);
@@ -37,7 +39,8 @@ async function enseñarCanciones() {
             // crea los inputs
             crearInputs();
             // cambio el numero de la track
-            currentTrack = playList.indexOf(song);
+            currentTrack = event.currentTarget.getAttribute('data-index');
+            console.log(currentTrack);
 
             howler.play();
 
@@ -307,10 +310,12 @@ function crearInputs() {
     document.getElementById("seconds").addEventListener("mouseleave", () => { isSecondsActive = false; });
     // pasar para atras
     document.getElementById("atras").addEventListener("click", () => {
+        
         currentTrack--;
         if (currentTrack < 0) {
             currentTrack = playList.length - 1;
         }
+        console.log(currentTrack);
         cambiarPista(currentTrack);
     }, false);
     // pasar para adelante
