@@ -22,13 +22,17 @@ main{
 #songContainer{
     margin-left: auto;
 }
-#canvasContainer,#imgContainer,#equalizer{
+#canvasContainer,#imgContainer{
     width: 600px;
     height: 600px;
+
 }
 #imgContainer{
     position: fixed;
-    z-index: -1;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #side{
     width: 400px;
@@ -37,7 +41,7 @@ main{
     display: flex;
     flex-direction: column;
 }
-#sideFooter{
+#sideHeader{
 height: 100px;
 }
 #sideMain{    
@@ -48,4 +52,14 @@ height: 100px;
     display: flex;
     justify-content: space-between;
 
+}
+#songList>*{
+padding: 5px;
+border-radius: 5px;
+cursor: pointer;
+user-select: none;
+}
+#imagen{
+width: 300px;
+border-radius: 50%;
 }

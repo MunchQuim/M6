@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="howler.css">
-    <script src="backColorScript.js" defer></script>
+    <!-- <script src="backColorScript.js" defer></script> -->
+    <script src="equilizer.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.js"></script>
+    <script src="main.js"></script>
 </head>
 <body>
     <header></header>
@@ -14,7 +17,7 @@
             <div id="imgContainer">
             </div>
             <div id="canvasContainer">
-                <canvas id="equalizer"></canvas>
+                <canvas id="equalizer" width="600" height="600"></canvas>
             </div>
             <div id="optionsContainer">
                 <input type="range" id="volumen">
@@ -22,8 +25,10 @@
             </div>
         </div>
         <div id="side">
-            <div id="sideFooter"></div>
-            <div id="sideMain"></div>
+            <div id="sideHeader"></div>
+            <div id="sideMain">
+                <div id="songList"></div>
+            </div>
         </div>
     </main>
     <footer>

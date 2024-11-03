@@ -1,0 +1,38 @@
+[
+    {
+        "title": "Eye of the Tiger",
+        "artist": "Survivor",
+        "src": "./songs/Energico.mp3",
+        "image": "./imgs/survivor.jpg"
+    },
+    {
+        "title": "Acid rain",
+        "artist": "Avenged Sevenfold",
+        "src": "./songs/Triste.mp3",
+        "image": "./imgs/avengedSevenfold.jpg"
+    },
+    {
+        "title": "Here comes the sun",
+        "artist": "Beatles",
+        "src": "./songs/Feliz.mp3",
+        "image": "./imgs/beatles.jpg"
+    },
+    {
+        "title": "Clair de lune",
+        "artist": "Debussy",
+        "src": "./songs/Relajado.mp3",
+        "image": "./imgs/debussy.jpg"
+    },
+    {
+        "title": "The sound of silence",
+        "artist": "Disturbed",
+        "src": "./songs/Estresado.mp3",
+        "image": "./imgs/disturbed.jpg"
+    },
+    {
+        "title": "On Top of the World",
+        "artist": "Imagine Dragons",
+        "src": "./songs/Inspirado.mp3",
+        "image": "./imgs/imagineDragons.jpg"
+    }
+]
