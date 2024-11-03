@@ -2,6 +2,8 @@
 let songVolume = 0.5;
 let howler;
 
+let maxDuration;
+let duration;
 
 //Equalizer
 //Get the audio context for the analyzer and get the number of samples
@@ -24,20 +26,24 @@ async function enseñarCanciones() {
         songDiv.innerText = song["title"];
         songDiv.addEventListener("click", () => {
             ponerFoto(song["image"]);
-            loadSongs(song["src"],song["image"]);
+            loadSongs(song["src"], song["image"]);
             howler.play();
-            
+
         }, false)
         songList.appendChild(songDiv);
     });
 }
 //Loading Songs
-const loadSongs = async (pSrc,image) => {
+const loadSongs = async (pSrc, image) => {
     Howler.unload();// lo destruimos (no podemos usar howler sino Howler) para que no se vayan sumando instancias
     howler = new Howl({
         src: pSrc,
-        volume: songVolume
+        volume: songVolume,
+        onload: function () {
+            maxDuration = howler._duration;
+        }
     });
+
 
 
     //Falta el tratamiento de las propiedades de la canción y toda la creación de la radio. Falta la creación y gestión de la lista de reproducción
@@ -107,11 +113,13 @@ function animateEqualizer(color) {
     // Obtiene los datos de frecuencia del audio
     analyser.getByteFrequencyData(dataArray);
 
-    const maxBarHeight = canvas.offsetHeight * 0.3; // Altura máxima deseada
+    const maxBarHeight = canvas.offsetHeight * 0.25; // Altura máxima deseada
     const radius = Math.min(canvas.offsetWidth, canvas.offsetHeight) * 0.25; // Radio del círculo
     const centerX = canvas.offsetWidth / 2; // Centro del canvas
     const centerY = canvas.offsetHeight / 2; // Centro del canvas
 
+    let total = 0;
+    let maximoTotal = 0;
     // Recorre el array de datos de frecuencia y dibuja las líneas radiales
     for (let i = 0; i < bufferLength * 0.5; i++) {// adaptado ya que nos e muestran todsa las frecuencias
         // Normalizar y escalar el valor
@@ -127,8 +135,26 @@ function animateEqualizer(color) {
         ctx.lineWidth = 2; // Grosor de la línea
         ctx.strokeStyle = color; // Cambia el color del trazo
         ctx.stroke(); // Dibuja la línea
+        total += barHeight;
+        if (barHeight > maximoTotal) {
+            maximoTotal = barHeight;
+        }
+    }
+    if (songVolume > 0) {
+        total = 1 + (Math.round(total / (bufferLength * 0.5) / 3) / 100);
+    }
+    else {
+        total = 1;
     }
 
+    document.getElementById("imagen").style.scale = total;
+
+    duration = Math.floor(howler.seek());
+    if(duration>0){
+        document.getElementById("seconds").value = (duration*100)/maxDuration;
+        console.log(document.getElementById("seconds").value);
+    }
+    
     // Repite la animación
     animationFrame = requestAnimationFrame(animateEqualizer);
 }
@@ -150,6 +176,7 @@ function ponerFoto(image) {
     imagen.src = image;
 
     canvasContainer.appendChild(imagen);
+    mostrar(document.getElementById("optionsContainer"));
 }
 
 function getColor(src) {//chat gpt 
@@ -157,13 +184,13 @@ function getColor(src) {//chat gpt
         const img = new Image();
         img.crossOrigin = "Anonymous"; // Necesario para imágenes cargadas desde dominios diferentes
         img.src = src;
-        img.onload = function() {
+        img.onload = function () {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = img.width;
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
-            
+
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
             let r = 0, g = 0, b = 0;
@@ -181,12 +208,53 @@ function getColor(src) {//chat gpt
 
             resolve(`rgb(${r}, ${g}, ${b})`);
         };
-        img.onerror = function() {
+        img.onerror = function () {
             reject(new Error('No se pudo cargar la imagen.'));
         };
     });
 }
+//mostrar
+function mostrar(elemento) {
+    elemento.classList.remove("oculto");
+    if (!elemento.classList.contains("mostrar")) {
+        elemento.classList.add("mostrar");
+    }
+}
+
+//ocultar
+function ocultar(elemento) {
+    elemento.classList.remove("mostrar");
+    if (!elemento.classList.contains("oculto")) {
+        elemento.classList.add("oculto");
+    }
+}
+
+//control de volumen
+document.getElementById("volumen").addEventListener("change", () => {
+
+    changeVolume(document.getElementById("volumen").value / 100)
+})
+function changeVolume(params) {
+    songVolume = params;
+    if (howler) {
+        howler.volume(songVolume);
+    }
+}
+// control de duracion
+document.getElementById("seconds").addEventListener("change", () => {
+    let multiplier = document.getElementById("seconds").value / 100
+
+    duration = maxDuration * multiplier;
+    changeTime(duration);
+})
+function changeTime(duration) {
+    if (howler) {
+        howler.seek(duration);
+    }
+}
 enseñarCanciones();
+
+
 // On Load
 /* loadSongs(); */
 

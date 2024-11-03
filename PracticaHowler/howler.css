@@ -1,65 +1,116 @@
-html,body{
+html,
+body {
     margin: 0px;
     padding: 0px;
     height: 100%
 }
-body{
+
+body {
     display: flex;
     flex-direction: column;
 }
-header,footer{
+
+header,
+footer {
     height: 100px;
     display: flex;
     align-items: center;
 }
-main{
-    flex-grow: 1; /* Ocupa el espacio restante */
+
+main {
+    flex-grow: 1;
+    /* Ocupa el espacio restante */
     display: flex;
-    justify-content: center; /* Centra el contenido de main */
-    align-items: center; /* Centra verticalmente */
+    justify-content: center;
+    /* Centra el contenido de main */
+    align-items: center;
+    /* Centra verticalmente */
     min-height: 600px;
 }
-#songContainer{
+
+#songContainer {
     margin-left: auto;
 }
-#canvasContainer,#imgContainer{
+
+#canvasContainer,
+#imgContainer {
     width: 600px;
     height: 600px;
 
 }
-#imgContainer{
+
+#imgContainer {
     position: fixed;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#side{
+
+#side {
     width: 400px;
     height: 100%;
     margin-left: auto;
     display: flex;
     flex-direction: column;
 }
-#sideHeader{
-height: 100px;
+
+#sideHeader {
+    height: 100px;
 }
-#sideMain{    
+
+#sideMain {
     height: auto;
 }
-#social-media{
+
+#social-media {
     height: 30%;
     display: flex;
     justify-content: space-between;
 
 }
-#songList>*{
-padding: 5px;
-border-radius: 5px;
-cursor: pointer;
-user-select: none;
+
+#songList>* {
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
 }
-#imagen{
-width: 300px;
-border-radius: 50%;
+
+#imagen {
+    width: 300px;
+    border-radius: 50%;
+    animation: girar 10s infinite linear;
+}
+
+.pulsado{
+    animation: girar 0.3s forwards linear;
+}
+
+.oculto{
+    display: none;
+}
+.mostrar{
+    display: flex;
+}
+@keyframes girar {
+    from {
+       transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+@keyframes pulsacion {
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.3);
+    }
+    100% {
+        transform:scale(1);
+    }
 }
