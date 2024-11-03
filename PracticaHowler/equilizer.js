@@ -20,6 +20,8 @@ let dataArray;
 let canvas = document.getElementById('equalizer');
 let ctx = canvas.getContext('2d');
 
+
+
 async function enseñarCanciones() {
 
     let response = await fetch('./jsons/songsData.json');
@@ -30,14 +32,14 @@ async function enseñarCanciones() {
         let songDiv = document.createElement("img");
         songDiv.innerText = song["image"];
         songDiv.src = song["image"];
-        songDiv.setAttribute('data-index',playList.indexOf(song))
+        songDiv.setAttribute('data-index', playList.indexOf(song))
         songDiv.addEventListener("click", () => {
             //pone la foto
             ponerFoto(song["image"]);
             // carga la cancion
             loadSongs(song["src"], song["image"]);
             // crea los inputs
-            crearInputs();
+            crearInputs(song["title"],song["artist"]);
             // cambio el numero de la track
             currentTrack = event.currentTarget.getAttribute('data-index');
             console.log(currentTrack);
@@ -48,6 +50,7 @@ async function enseñarCanciones() {
         songList.appendChild(songDiv);
     });
 }
+
 //Loading Songs
 const loadSongs = async (pSrc, image) => {
     Howler.unload();// lo destruimos (no podemos usar howler sino Howler) para que no se vayan sumando instancias
@@ -66,7 +69,74 @@ const loadSongs = async (pSrc, image) => {
         }
     });
 
+    //Falta el tratamiento de las propiedades de la canción y toda la creación de la radio. Falta la creación y gestión de la lista de reproducción
 
+    //Equilizer
+    let color = await getColor(image);
+    analyser = Howler.ctx.createAnalyser();    //Proporciona acceso a la frecuencia y los datos de tiempo del audio que está siendo reproducido. 
+    bufferLength = analyser.frequencyBinCount; //Indica el número de muestras de datos que se obtendrán del audio.
+    dataArray = new Uint8Array(bufferLength);
+    loadEqualizer();
+    animateEqualizer(color);
+}
+// radios
+
+//datos json radio hardcodeadas
+let radios = [{
+    "src" : "https://20853.live.streamtheworld.com/CADENASERAAC.aac",
+    "canal": "Catalunya Radio",
+    "image": "./imgs/catRadio.png"
+}];
+async function enseñarRadios() {
+
+   /*  let response = await fetch('./jsons/songsData.json'); */
+    let radioList = document.getElementById("radioList");
+
+    radios.forEach(radio => {
+        let radioDiv = document.createElement("img");
+        radioDiv.innerText = radio["image"];
+        radioDiv.src = radio["image"];
+        radioDiv.setAttribute('data-index', radios.indexOf(radio))
+        radioDiv.addEventListener("click", () => {
+
+            prueba();
+            /* //pone la foto
+            ponerFoto(radio["image"]);
+            // carga la cancion
+            loadRadios(radio["src"], radio["image"]);
+            // crea los inputs
+            crearInputs();
+            howler.play(); */
+
+        }, false)
+        radioList.appendChild(radioDiv);
+    });
+}
+
+const loadRadios = async (pSrc, image) => {
+    Howler.unload();// lo destruimos (no podemos usar howler sino Howler) para que no se vayan sumando instancias
+    howler = new Howl({
+        src: pSrc,
+        format: ['mp3'],
+        autoplay: true,
+        volume: songVolume,
+        onload: function () {
+            maxDuration = howler._duration;
+        },
+        onend: function () {
+            currentTrack++;
+            if (currentTrack >= playList.length) {
+                currentTrack = 0;
+            }
+            cambiarPista(currentTrack);
+        },
+        onloaderror: function (id, err) {
+            console.error('Error al cargar la transmisión:', err);
+        },
+        onplayerror: function (id, err) {
+            console.error('Error al reproducir la transmisión:', err);
+        }
+    });
 
     //Falta el tratamiento de las propiedades de la canción y toda la creación de la radio. Falta la creación y gestión de la lista de reproducción
 
@@ -79,6 +149,9 @@ const loadSongs = async (pSrc, image) => {
     animateEqualizer(color);
 }
 
+function prueba(params) {
+    howler = new Howl({ src: ['https://20853.live.streamtheworld.com/ONDA_ZERO_R1.aac'], format: ['aac'], autoplay: true, volume: 0.5, onload: function() { console.log('Onda Cero cargado y listo para reproducir.'); }, onplay: function() { console.log('Reproduciendo Onda Cero.'); }, onend: function() { console.log('La transmisión ha terminado.'); }, onloaderror: function(id, err) { console.error('Error al cargar la transmisión:', err); }, onplayerror: function(id, err) { console.error('Error al reproducir la transmisión:', err); } }); // Inicia reproducción howler.play();
+}
 
 
 
@@ -201,6 +274,10 @@ function ponerFoto(image) {
     mostrar(document.getElementById("optionsContainer"));
 }
 
+function ponerTitulo(titulo, artista) {
+    
+}
+
 function getColor(src) {//chat gpt 
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -235,12 +312,14 @@ function getColor(src) {//chat gpt
         };
     });
 }
-function crearInputs() {
+function crearInputs(title, artist) {
     let padre = document.getElementById("optionsContainer");
     padre.innerHTML = "";
 
     let barrasContainer = document.createElement("div");
     barrasContainer.className = "flex-container";
+    barrasContainer.id = "posBtns";
+
     const volumeContainer = document.createElement("div");
     volumeContainer.id = "volumeContainer";
     // creo el input de volumen
@@ -252,13 +331,23 @@ function crearInputs() {
     volumeInput.step = "0.01";
     volumeContainer.appendChild(volumeInput);
     // la etiqueta del volumen
-    const volumeLabel = document.createElement("label");
-    volumeLabel.htmlFor = "volumen";
-    volumeLabel.innerText = "Volumen";
-    volumeContainer.appendChild(volumeLabel);
+    const volumeImg = document.createElement("img");
+    volumeImg.id = "volumeImg";
+    volumeImg.src = "./imgs/alto-volumen.png";
+    volumeContainer.appendChild(volumeImg);
 
-    barrasContainer.appendChild(volumeContainer);
-    // el volumen
+    padre.appendChild(volumeContainer);
+    // el titulo
+    const titulo = document.createElement("h2");
+    titulo.innerText = title;
+
+    const artista = document.createElement("p");
+    artista.innerText = artist;
+
+    barrasContainer.appendChild(titulo);
+    barrasContainer.appendChild(artista);
+
+    // la posicion
     const secondsInput = document.createElement("input");
     secondsInput.type = "range";
     secondsInput.id = "seconds";
@@ -268,7 +357,7 @@ function crearInputs() {
     secondsInput.step = "1";
     barrasContainer.appendChild(secondsInput);
     //
-    padre.appendChild(barrasContainer);
+   
     // opciones de control
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "flex-container";
@@ -292,8 +381,8 @@ function crearInputs() {
     forwardButton.src = "./imgs/backwards.png";
     forwardButton.alt = "Adelante";
     buttonContainer.appendChild(forwardButton);
-    padre.appendChild(buttonContainer);
-
+    barrasContainer.appendChild(buttonContainer);
+    padre.appendChild(barrasContainer);
     document.getElementById("volumen").addEventListener("change", () => {
 
         changeVolume(document.getElementById("volumen").value / 100)
@@ -310,7 +399,7 @@ function crearInputs() {
     document.getElementById("seconds").addEventListener("mouseleave", () => { isSecondsActive = false; });
     // pasar para atras
     document.getElementById("atras").addEventListener("click", () => {
-        
+
         currentTrack--;
         if (currentTrack < 0) {
             currentTrack = playList.length - 1;
@@ -351,15 +440,25 @@ async function cambiarPista(number) {
     let song = playList[number]
 
     ponerFoto(song["image"]);
-
+    
     loadSongs(song["src"], song["image"]);
     // crea los inputs
-    crearInputs();
+    crearInputs(song["title"],song["artist"]);
     howler.play();
 
 
 
 }
+// cambio entre radio y canciones
+document.getElementById("playlistBtn").addEventListener("click", () => {
+    mostrar(document.getElementById("songList"));
+    ocultar(document.getElementById("radioList"));
+}, false);
+
+document.getElementById("radioBtn").addEventListener("click", () => {
+    mostrar(document.getElementById("radioList"));
+    ocultar(document.getElementById("songList"));
+}, false);
 
 //mostrar
 function mostrar(elemento) {
@@ -371,7 +470,7 @@ function mostrar(elemento) {
 
 //ocultar
 function ocultar(elemento) {
-    elemento.classList.remove("mostrar");
+    elemento.classList.remove("mostrado");
     if (!elemento.classList.contains("oculto")) {
         elemento.classList.add("oculto");
     }
@@ -393,7 +492,7 @@ function changeTime(duration) {
     }
 }
 enseñarCanciones();
-
+enseñarRadios();
 
 // On Load
 /* loadSongs(); */
