@@ -5,6 +5,11 @@ let howler;
 let maxDuration;
 let duration;
 
+
+let playList = [];
+let currentTrack = [];
+
+let isSecondsActive = false;
 //Equalizer
 //Get the audio context for the analyzer and get the number of samples
 let analyser;
@@ -18,15 +23,22 @@ let ctx = canvas.getContext('2d');
 async function enseñarCanciones() {
 
     let response = await fetch('./jsons/songsData.json');
-    songs = await response.json();
+    playList = await response.json();
     let songList = document.getElementById("songList");
 
-    songs.forEach(song => {
+    playList.forEach(song => {
         let songDiv = document.createElement("div");
         songDiv.innerText = song["title"];
         songDiv.addEventListener("click", () => {
+            //pone la foto
             ponerFoto(song["image"]);
+            // carga la cancion
             loadSongs(song["src"], song["image"]);
+            // crea los inputs
+            crearInputs();
+            // cambio el numero de la track
+            currentTrack = playList.indexOf(song);
+
             howler.play();
 
         }, false)
@@ -41,6 +53,13 @@ const loadSongs = async (pSrc, image) => {
         volume: songVolume,
         onload: function () {
             maxDuration = howler._duration;
+        },
+        onend: function () {
+            currentTrack++;
+            if (currentTrack >= playList.length) {
+                currentTrack = 0;
+            }
+            cambiarPista(currentTrack);
         }
     });
 
@@ -150,11 +169,11 @@ function animateEqualizer(color) {
     document.getElementById("imagen").style.scale = total;
 
     duration = Math.floor(howler.seek());
-    if(duration>0){
-        document.getElementById("seconds").value = (duration*100)/maxDuration;
+    if (duration > 0 && !isSecondsActive) {
+        document.getElementById("seconds").value = (duration * 100) / maxDuration;
         console.log(document.getElementById("seconds").value);
     }
-    
+
     // Repite la animación
     animationFrame = requestAnimationFrame(animateEqualizer);
 }
@@ -213,11 +232,135 @@ function getColor(src) {//chat gpt
         };
     });
 }
+function crearInputs() {
+    let padre = document.getElementById("optionsContainer");
+    padre.innerHTML = "";
+
+    let barrasContainer = document.createElement("div");
+    barrasContainer.className = "flex-container";
+    const volumeContainer = document.createElement("div");
+    volumeContainer.id = "volumeContainer";
+    // creo el input de volumen
+    const volumeInput = document.createElement("input");
+    volumeInput.type = "range";
+    volumeInput.id = "volumen";
+    volumeInput.min = "0";
+    volumeInput.max = "100";
+    volumeInput.step = "0.01";
+    volumeContainer.appendChild(volumeInput);
+    // la etiqueta del volumen
+    const volumeLabel = document.createElement("label");
+    volumeLabel.htmlFor = "volumen";
+    volumeLabel.innerText = "Volumen";
+    volumeContainer.appendChild(volumeLabel);
+
+    barrasContainer.appendChild(volumeContainer);
+    // el volumen
+    const secondsInput = document.createElement("input");
+    secondsInput.type = "range";
+    secondsInput.id = "seconds";
+    secondsInput.value = "0";
+    secondsInput.min = "0";
+    secondsInput.max = "100";
+    secondsInput.step = "1";
+    barrasContainer.appendChild(secondsInput);
+    //
+    padre.appendChild(barrasContainer);
+    // opciones de control
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "flex-container";
+
+    // Crear botones
+    //atras
+    const backButton = document.createElement("img");
+    backButton.id = "atras";
+    backButton.src = "./imgs/backwards.png";
+    backButton.alt = "Atrás";
+    buttonContainer.appendChild(backButton);
+    //pausa
+    const pauseButton = document.createElement("img");
+    pauseButton.id = "pausa";
+    pauseButton.classList = "pausa";
+    pauseButton.alt = "Pausa";
+    buttonContainer.appendChild(pauseButton);
+    //adelante
+    const forwardButton = document.createElement("img");
+    forwardButton.id = "adelante";
+    forwardButton.src = "./imgs/backwards.png";
+    forwardButton.alt = "Adelante";
+    buttonContainer.appendChild(forwardButton);
+    padre.appendChild(buttonContainer);
+
+    document.getElementById("volumen").addEventListener("change", () => {
+
+        changeVolume(document.getElementById("volumen").value / 100)
+    })
+    document.getElementById("seconds").addEventListener("change", () => {
+        let multiplier = document.getElementById("seconds").value / 100
+
+        duration = maxDuration * multiplier;
+        changeTime(duration);
+    })
+    // debo hacer estos eventos para permitir cambiar el tiempo de manera correcta, sino lo cambia a medida que quiero cambiarlo yo 
+    document.getElementById("seconds").addEventListener("mousedown", () => { isSecondsActive = true; });
+    document.getElementById("seconds").addEventListener("mouseup", () => { isSecondsActive = false; });
+    document.getElementById("seconds").addEventListener("mouseleave", () => { isSecondsActive = false; });
+    // pasar para atras
+    document.getElementById("atras").addEventListener("click", () => {
+        currentTrack--;
+        if (currentTrack < 0) {
+            currentTrack = playList.length - 1;
+        }
+        cambiarPista(currentTrack);
+    }, false);
+    // pasar para adelante
+    document.getElementById("adelante").addEventListener("click", () => {
+        currentTrack++;
+        if (currentTrack >= playList.length) {
+            currentTrack = 0;
+        }
+        cambiarPista(currentTrack);
+    }, false);
+    //pausar/reanudar
+    document.getElementById("pausa").addEventListener("click", () => {
+        console.log(document.getElementById("pausa").src);
+        if (document.getElementById("pausa").classList.contains("pausa")) {
+            document.getElementById("pausa").classList.remove("pausa");
+            document.getElementById("pausa").classList.add("reanudar");
+            howler.pause();
+
+        } else {
+            document.getElementById("pausa").classList.remove("reanudar");
+            document.getElementById("pausa").classList.add("pausa");
+            howler.play();
+        }
+    }, false)
+}
+
+async function cambiarPista(number) {
+    howler.stop();
+
+    let response = await fetch('./jsons/songsData.json');
+    playList = await response.json();
+    let songList = document.getElementById("songList");
+    let song = playList[number]
+
+    ponerFoto(song["image"]);
+
+    loadSongs(song["src"], song["image"]);
+    // crea los inputs
+    crearInputs();
+    howler.play();
+
+
+
+}
+
 //mostrar
 function mostrar(elemento) {
     elemento.classList.remove("oculto");
-    if (!elemento.classList.contains("mostrar")) {
-        elemento.classList.add("mostrar");
+    if (!elemento.classList.contains("mostrado")) {
+        elemento.classList.add("mostrado");
     }
 }
 
@@ -230,10 +373,7 @@ function ocultar(elemento) {
 }
 
 //control de volumen
-document.getElementById("volumen").addEventListener("change", () => {
 
-    changeVolume(document.getElementById("volumen").value / 100)
-})
 function changeVolume(params) {
     songVolume = params;
     if (howler) {
@@ -241,12 +381,7 @@ function changeVolume(params) {
     }
 }
 // control de duracion
-document.getElementById("seconds").addEventListener("change", () => {
-    let multiplier = document.getElementById("seconds").value / 100
 
-    duration = maxDuration * multiplier;
-    changeTime(duration);
-})
 function changeTime(duration) {
     if (howler) {
         howler.seek(duration);
