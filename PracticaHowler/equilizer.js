@@ -51,12 +51,12 @@ async function enseñarCanciones() {
     let shuffleBtn = document.createElement("button");
     shuffleBtn.id = "shuffleBtn";
     shuffleBtn.innerText = "Mezcla";
-    shuffleBtn.addEventListener("click",()=>{
+    shuffleBtn.addEventListener("click", () => {
         shuffle(playList);
         //reorganizar
-        
+
         reorganizar(playList);
-    },false)
+    }, false)
 
     document.getElementById("sideFooter").appendChild(shuffleBtn);
 }
@@ -242,12 +242,12 @@ function animateEqualizer(color) {
         // Normalizar y escalar el valor
         const barHeight = (dataArray[i] / 255) * maxBarHeight; // Normaliza el valor entre 0 y maxBarHeight
         const angle = (i / (bufferLength * 0.5)) * (Math.PI * 2) - (Math.PI / 2); // Calcula el ángulo correspondiente// adaptado ya que nos e muestran todsa las frecuencias de debe multiplicar por 1/ lo reducido
-        const x = centerX + Math.cos(angle) * (radius + barHeight); // Coordenada x
+        const x = centerX + Math.cos(angle) * (radius + barHeight); // Coordenada x //el destino se mueve segun el angulo correspondiente
         const y = centerY + Math.sin(angle) * (radius + barHeight); // Coordenada y
         ctx.fillStyle = color; // Cambia el color de las barras según tu preferencia
         ctx.beginPath();
-        ctx.moveTo(centerX, centerY); // Mueve el cursor al centro
-        ctx.lineTo(x, y); // Dibuja la línea hacia el borde
+        ctx.moveTo(centerX, centerY); // Mueve el cursor al centro // lo dibuja desde el centro 
+        ctx.lineTo(x, y); // Dibuja la línea hacia el borde // hacia el destino
         ctx.lineWidth = 2; // Grosor de la línea
         ctx.strokeStyle = color; // Cambia el color del trazo
         ctx.stroke(); // Dibuja la línea
@@ -269,7 +269,7 @@ function animateEqualizer(color) {
     if (document.getElementById("seconds")) {
         if (duration > 0 && !isSecondsActive) {
             document.getElementById("seconds").value = (duration * 100) / maxDuration;
-           /*  console.log(document.getElementById("seconds").value); */
+            /*  console.log(document.getElementById("seconds").value); */
         }
     }
 
@@ -361,6 +361,18 @@ function crearInputs(title, artist) {
     volumeContainer.appendChild(volumeImg);
 
     padre.appendChild(volumeContainer);
+
+    //agudos y graves
+    const pitchInput = document.createElement("input");
+    pitchInput.type = "range";
+    pitchInput.id = "pitch";
+    pitchInput.min = "0.5";
+    pitchInput.max = "1.5";
+    pitchInput.step = "0.01";
+    pitchInput.value = 1;
+    volumeContainer.appendChild(pitchInput);
+
+
     // el titulo
     const titulo = document.createElement("h2");
     titulo.innerText = title;
@@ -416,7 +428,11 @@ function crearInputs(title, artist) {
 
         duration = maxDuration * multiplier;
         changeTime(duration);
+    })  
+    document.getElementById("pitch").addEventListener("change", () => {
+        changePitch(event.currentTarget.value);
     })
+
     // debo hacer estos eventos para permitir cambiar el tiempo de manera correcta, sino lo cambia a medida que quiero cambiarlo yo 
     document.getElementById("seconds").addEventListener("mousedown", () => { isSecondsActive = true; });
     document.getElementById("seconds").addEventListener("mouseup", () => { isSecondsActive = false; });
@@ -457,8 +473,8 @@ function crearInputs(title, artist) {
 
 async function cambiarPista(number) {
     howler.stop();
-/* 
-    let response = await fetch('./jsons/songsData.json'); */
+    /* 
+        let response = await fetch('./jsons/songsData.json'); */
 
     let song = playList[number]
 
@@ -476,16 +492,16 @@ async function cambiarPista(number) {
 //mezcla las canciones
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]; // Intercambia los elementos
-      if(i == currentTrack){
-        currentTrack = j;
-      }else if(j == currentTrack){
-        currentTrack = i;
-      }
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Intercambia los elementos
+        if (i == currentTrack) {
+            currentTrack = j;
+        } else if (j == currentTrack) {
+            currentTrack = i;
+        }
     }
     return array;
-  }
+}
 // cambio entre radio y canciones
 document.getElementById("playlistBtn").addEventListener("click", () => {
     mostrarGrid(document.getElementById("songList"));
@@ -534,6 +550,9 @@ function changeTime(duration) {
     if (howler) {
         howler.seek(duration);
     }
+}
+function changePitch(rate) {
+    howler.rate(rate);
 }
 enseñarCanciones();
 enseñarRadios();
