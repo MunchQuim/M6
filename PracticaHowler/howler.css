@@ -39,7 +39,6 @@ main {
     /* Centra el contenido de main */
     align-items: center;
     /* Centra verticalmente */
-    min-height: 600px;
 }
 
 a>img {
