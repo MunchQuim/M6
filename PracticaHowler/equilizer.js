@@ -488,26 +488,33 @@ function shuffle(array) {
   }
 // cambio entre radio y canciones
 document.getElementById("playlistBtn").addEventListener("click", () => {
-    mostrar(document.getElementById("songList"));
+    mostrarGrid(document.getElementById("songList"));
     ocultar(document.getElementById("radioList"));
 }, false);
 
 document.getElementById("radioBtn").addEventListener("click", () => {
-    mostrar(document.getElementById("radioList"));
+    mostrarGrid(document.getElementById("radioList"));
     ocultar(document.getElementById("songList"));
 }, false);
 
 //mostrar
 function mostrar(elemento) {
     elemento.classList.remove("oculto");
-    if (!elemento.classList.contains("mostrado")) {
-        elemento.classList.add("mostrado");
+    if (!elemento.classList.contains("mostradoFlex")) {
+        elemento.classList.add("mostradoFlex");
+    }
+}
+function mostrarGrid(elemento) {
+    elemento.classList.remove("oculto");
+    if (!elemento.classList.contains("mostradoGrid")) {
+        elemento.classList.add("mostradoGrid");
     }
 }
 
 //ocultar
 function ocultar(elemento) {
-    elemento.classList.remove("mostrado");
+    elemento.classList.remove("mostradoFlex");
+    elemento.classList.remove("mostradoGrid");
     if (!elemento.classList.contains("oculto")) {
         elemento.classList.add("oculto");
     }

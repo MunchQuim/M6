@@ -243,11 +243,14 @@ button:active {
 
 /* para cambiar entre estados*/
 .oculto {
-    display: none;
+    display: none !important;
 }
 
-.mostrado {
-    display: flex;
+.mostradoFlex {
+    display: flex !important;
+}
+.mostradoGrid {
+    display: grid !important;
 }
 
 .pausa {
