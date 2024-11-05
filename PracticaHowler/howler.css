@@ -33,7 +33,7 @@ footer {
 }
 
 main {
-    flex-grow: 1;
+    height: fit-content;
     /* Ocupa el espacio restante */
     display: flex;
     justify-content: center;
@@ -87,6 +87,8 @@ button:active {
 
 #songContainer {
     margin-left: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #canvasContainer,
@@ -123,6 +125,7 @@ button:active {
     margin-left: auto;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #sideHeader {
@@ -191,10 +194,10 @@ button:active {
     box-shadow: inset 0px 0px 10px black;
 }
 #sideFooter{
-    max-height: 80px;
-    display: flex;
-    justify-content: center;
+    padding: 0px 20px;
+    height: 100px;
 }
+
 /* #radioList{
     background-color: aquamarine;
     height: 200px;
@@ -209,6 +212,7 @@ button:active {
     width: 25px;
     height: 25px;
 }
+
 
 .pulsado {
     animation: girar 0.3s forwards linear;
