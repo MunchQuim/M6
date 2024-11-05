@@ -520,11 +520,13 @@ function crearInputs(title, artist) {
     document.getElementById("pausa").addEventListener("click", () => {/* 
         console.log(document.getElementById("pausa").src); */
         if (document.getElementById("pausa").classList.contains("pausa")) {
+            document.getElementById("imagen").style.animationPlayState = "paused";
             document.getElementById("pausa").classList.remove("pausa");
             document.getElementById("pausa").classList.add("reanudar");
             howler.pause();
 
         } else {
+            document.getElementById("imagen").style.animationPlayState = "running";
             document.getElementById("pausa").classList.remove("reanudar");
             document.getElementById("pausa").classList.add("pausa");
             howler.play();
@@ -613,7 +615,14 @@ function changeTime(duration) {
     }
 }
 function changePitch(rate) {
+    const imagen = document.getElementById("imagen");
+    let velocidad = 10 / rate;
+    console.log(velocidad);
+/*     document.getElementById("imagen").style.animationPlayState = "paused";
+    document.getElementById("imagen").style.animationDuration = velocidad+"s";
+    document.getElementById("imagen").style.animationPlayState = "running"; */
     howler.rate(rate);
+
 }
 function changeBajos(bajo) {
     let bassValue = parseFloat(bajo); 
