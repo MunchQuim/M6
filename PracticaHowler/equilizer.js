@@ -8,7 +8,6 @@ let duration;
 
 let playList = [];
 let currentTrack = 0;
-
 let isSecondsActive = false;
 //Equalizer
 //Get the audio context for the analyzer and get the number of samples
@@ -49,8 +48,45 @@ async function enseñarCanciones() {
         }, false)
         songList.appendChild(songDiv);
     });
-}
+    let shuffleBtn = document.createElement("button");
+    shuffleBtn.id = "shuffleBtn";
+    shuffleBtn.innerText = "Mezcla";
+    shuffleBtn.addEventListener("click",()=>{
+        shuffle(playList);
+        //reorganizar
+        
+        reorganizar(playList);
+    },false)
 
+    document.getElementById("sideFooter").appendChild(shuffleBtn);
+}
+//reorganizar pistas
+function reorganizar(playlist) {
+    let songList = document.getElementById("songList");
+    songList.innerHTML = "";
+
+    playList.forEach(song => {
+        let songDiv = document.createElement("img");
+        songDiv.innerText = song["image"];
+        songDiv.src = song["image"];
+        songDiv.setAttribute('data-index', playList.indexOf(song))
+        songDiv.addEventListener("click", () => {
+            //pone la foto
+            ponerFoto(song["image"]);
+            // carga la cancion
+            loadSongs(song["src"], song["image"]);
+            // crea los inputs
+            crearInputs(song["title"], song["artist"]);
+            // cambio el numero de la track
+            currentTrack = event.currentTarget.getAttribute('data-index');
+            console.log(currentTrack);
+
+            howler.play();
+
+        }, false)
+        songList.appendChild(songDiv);
+    });
+}
 //Loading Songs
 const loadSongs = async (pSrc, image) => {
     Howler.unload();// lo destruimos (no podemos usar howler sino Howler) para que no se vayan sumando instancias
@@ -233,7 +269,7 @@ function animateEqualizer(color) {
     if (document.getElementById("seconds")) {
         if (duration > 0 && !isSecondsActive) {
             document.getElementById("seconds").value = (duration * 100) / maxDuration;
-            console.log(document.getElementById("seconds").value);
+           /*  console.log(document.getElementById("seconds").value); */
         }
     }
 
@@ -421,10 +457,9 @@ function crearInputs(title, artist) {
 
 async function cambiarPista(number) {
     howler.stop();
+/* 
+    let response = await fetch('./jsons/songsData.json'); */
 
-    let response = await fetch('./jsons/songsData.json');
-    playList = await response.json();
-    let songList = document.getElementById("songList");
     let song = playList[number]
 
     ponerFoto(song["image"]);
@@ -437,6 +472,20 @@ async function cambiarPista(number) {
 
 
 }
+
+//mezcla las canciones
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Intercambia los elementos
+      if(i == currentTrack){
+        currentTrack = j;
+      }else if(j == currentTrack){
+        currentTrack = i;
+      }
+    }
+    return array;
+  }
 // cambio entre radio y canciones
 document.getElementById("playlistBtn").addEventListener("click", () => {
     mostrar(document.getElementById("songList"));
