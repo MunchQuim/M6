@@ -15,6 +15,9 @@ let analyser;
 let bufferLength;
 let dataArray;
 
+let gainNode;
+let bassFilter;
+let trebleFilter;
 //Get the canvas and the context to use the equalizer
 let canvas = document.getElementById('equalizer');
 let ctx = canvas.getContext('2d');
@@ -93,6 +96,26 @@ const loadSongs = async (pSrc, image) => {
     howler = new Howl({
         src: pSrc,
         volume: songVolume,
+        onplay: function () {
+            gainNode = Howler.ctx.createGain();
+
+            //creo el filtro de los bajos
+            bassFilter = Howler.ctx.createBiquadFilter();
+            bassFilter.type = 'lowshelf';
+            bassFilter.frequency.value = 300; // lo digo que sean los bajos, y que la frecuencia es de 300
+        
+            //filtro para agudos
+            trebleFilter = Howler.ctx.createBiquadFilter();
+            trebleFilter.type = 'highshelf'; 
+            trebleFilter.frequency.value = 3000;
+        
+            //lo tengo que conectar
+            howler._sounds[0]._node.connect(bassFilter);
+            bassFilter.connect(trebleFilter);
+            trebleFilter.connect(gainNode); //lo que no se es por que se tiene que hacer un trenecito
+        
+            gainNode.connect(Howler.ctx.destination);
+        },
         onload: function () {
             maxDuration = howler._duration;
         },
@@ -112,6 +135,11 @@ const loadSongs = async (pSrc, image) => {
     analyser = Howler.ctx.createAnalyser();    //Proporciona acceso a la frecuencia y los datos de tiempo del audio que está siendo reproducido. 
     bufferLength = analyser.frequencyBinCount; //Indica el número de muestras de datos que se obtendrán del audio.
     dataArray = new Uint8Array(bufferLength);
+
+    
+ 
+
+
     loadEqualizer();
     animateEqualizer(color);
 }
@@ -370,7 +398,28 @@ function crearInputs(title, artist) {
     pitchInput.max = "1.5";
     pitchInput.step = "0.01";
     pitchInput.value = 1;
-    volumeContainer.appendChild(pitchInput);
+    const pitchP = document.createElement("p");
+    pitchP.innerText = "pitch";
+    //
+    const bajoInput = document.createElement("input");
+    bajoInput.type = "range";
+    bajoInput.id = "bajo";
+    bajoInput.min = "-1";
+    bajoInput.max = "1";
+    bajoInput.step = "0.01";
+    bajoInput.value = 0;
+    const bajoP = document.createElement("p");
+    bajoP.innerText = "bajos";
+
+    const altoInput = document.createElement("input");
+    altoInput.type = "range";
+    altoInput.id = "alto";
+    altoInput.min = "-1";
+    altoInput.max = "1";
+    altoInput.step = "0.01";
+    altoInput.value = 0;
+    const altoP = document.createElement("p");
+    altoP.innerText = "altos";
 
 
     // el titulo
@@ -418,6 +467,12 @@ function crearInputs(title, artist) {
     forwardButton.alt = "Adelante";
     buttonContainer.appendChild(forwardButton);
     barrasContainer.appendChild(buttonContainer);
+    barrasContainer.appendChild(pitchInput);
+    barrasContainer.appendChild(pitchP);
+    barrasContainer.appendChild(bajoInput);
+    barrasContainer.appendChild(bajoP);
+    barrasContainer.appendChild(altoInput);
+    barrasContainer.appendChild(altoP);
     padre.appendChild(barrasContainer);
     document.getElementById("volumen").addEventListener("change", () => {
 
@@ -428,9 +483,15 @@ function crearInputs(title, artist) {
 
         duration = maxDuration * multiplier;
         changeTime(duration);
-    })  
+    })
     document.getElementById("pitch").addEventListener("change", () => {
         changePitch(event.currentTarget.value);
+    })
+    document.getElementById("bajo").addEventListener("change", () => {
+        changeBajos(event.currentTarget.value);
+    })
+    document.getElementById("alto").addEventListener("change", () => {
+        changeAltos(event.currentTarget.value);
     })
 
     // debo hacer estos eventos para permitir cambiar el tiempo de manera correcta, sino lo cambia a medida que quiero cambiarlo yo 
@@ -553,6 +614,15 @@ function changeTime(duration) {
 }
 function changePitch(rate) {
     howler.rate(rate);
+}
+function changeBajos(bajo) {
+    let bassValue = parseFloat(bajo); 
+    bassFilter.gain.value = bassValue * 20; // cambia -20 +20 db las frecuencias bajas
+    console.log(bassFilter);
+}
+function changeAltos(alto) {
+    let trebleValue = parseFloat(alto);
+    trebleFilter.gain.value = trebleValue * 20;
 }
 enseñarCanciones();
 enseñarRadios();

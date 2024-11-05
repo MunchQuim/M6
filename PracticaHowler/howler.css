@@ -102,7 +102,9 @@ button:active {
     display: flex;
     flex-direction: column;
 }
-
+#pitch,#alto,#bajo{
+width: 200px;
+}
 #volumen {
     writing-mode: vertical-lr;
     direction: rtl;
