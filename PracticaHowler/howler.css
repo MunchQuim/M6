@@ -167,10 +167,10 @@ button:active {
     box-shadow: inset 0px 0px 10px black;
 }
 
-#radioList{
+/* #radioList{
     background-color: aquamarine;
     height: 200px;
-}
+} */
 #imagen {
     width: 300px;
     border-radius: 50%;

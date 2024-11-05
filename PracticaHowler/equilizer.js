@@ -39,7 +39,7 @@ async function enseñarCanciones() {
             // carga la cancion
             loadSongs(song["src"], song["image"]);
             // crea los inputs
-            crearInputs(song["title"],song["artist"]);
+            crearInputs(song["title"], song["artist"]);
             // cambio el numero de la track
             currentTrack = event.currentTarget.getAttribute('data-index');
             console.log(currentTrack);
@@ -83,52 +83,48 @@ const loadSongs = async (pSrc, image) => {
 
 //datos json radio hardcodeadas
 let radios = [{
-    "src" : "https://20853.live.streamtheworld.com/CADENASERAAC.aac",
+    "src": "https://20853.live.streamtheworld.com/CADENASERAAC.aac",
     "canal": "Catalunya Radio",
     "image": "./imgs/catRadio.png"
 }];
 async function enseñarRadios() {
 
-   /*  let response = await fetch('./jsons/songsData.json'); */
+    let response = await fetch('http://172.17.131.175:3000/api/radios');
+    radios = await response.json();
+
+    console.log(radios['radios']);
     let radioList = document.getElementById("radioList");
 
-    radios.forEach(radio => {
-        let radioDiv = document.createElement("img");
-        radioDiv.innerText = radio["image"];
-        radioDiv.src = radio["image"];
-        radioDiv.setAttribute('data-index', radios.indexOf(radio))
+    radios['radios'].forEach(radio => {
+        let radioDiv = document.createElement("div");
+        radioDiv.innerText = radio['tittle'];
+        radioDiv.setAttribute('data-index', radios['radios'].indexOf(radio))
         radioDiv.addEventListener("click", () => {
-
-            prueba();
-            /* //pone la foto
-            ponerFoto(radio["image"]);
-            // carga la cancion
-            loadRadios(radio["src"], radio["image"]);
-            // crea los inputs
-            crearInputs();
-            howler.play(); */
-
+            ponerFoto("./imgs/radio.png");
+            loadRadios(radio['src']);
         }, false)
         radioList.appendChild(radioDiv);
     });
 }
 
-const loadRadios = async (pSrc, image) => {
+const loadRadios = async (pSrc) => {
+    if (document.getElementById('posBtns')) {
+        document.getElementById('posBtns').remove();//quitamos los botones de la reproduccion de musica dejando el volumen.
+    }
+
     Howler.unload();// lo destruimos (no podemos usar howler sino Howler) para que no se vayan sumando instancias
     howler = new Howl({
         src: pSrc,
-        format: ['mp3'],
         autoplay: true,
+        html5: true,
         volume: songVolume,
-        onload: function () {
-            maxDuration = howler._duration;
-        },
-        onend: function () {
-            currentTrack++;
-            if (currentTrack >= playList.length) {
-                currentTrack = 0;
-            }
-            cambiarPista(currentTrack);
+        onplay: function () {
+            //Equilizer
+            analyser = Howler.ctx.createAnalyser();    //Proporciona acceso a la frecuencia y los datos de tiempo del audio que está siendo reproducido. 
+            bufferLength = analyser.frequencyBinCount; //Indica el número de muestras de datos que se obtendrán del audio.
+            dataArray = new Uint8Array(bufferLength);
+            loadEqualizer();
+            animateEqualizer('black');
         },
         onloaderror: function (id, err) {
             console.error('Error al cargar la transmisión:', err);
@@ -138,21 +134,9 @@ const loadRadios = async (pSrc, image) => {
         }
     });
 
-    //Falta el tratamiento de las propiedades de la canción y toda la creación de la radio. Falta la creación y gestión de la lista de reproducción
 
-    //Equilizer
-    let color = await getColor(image);
-    analyser = Howler.ctx.createAnalyser();    //Proporciona acceso a la frecuencia y los datos de tiempo del audio que está siendo reproducido. 
-    bufferLength = analyser.frequencyBinCount; //Indica el número de muestras de datos que se obtendrán del audio.
-    dataArray = new Uint8Array(bufferLength);
-    loadEqualizer();
-    animateEqualizer(color);
+
 }
-
-function prueba(params) {
-    howler = new Howl({ src: ['https://20853.live.streamtheworld.com/ONDA_ZERO_R1.aac'], format: ['aac'], autoplay: true, volume: 0.5, onload: function() { console.log('Onda Cero cargado y listo para reproducir.'); }, onplay: function() { console.log('Reproduciendo Onda Cero.'); }, onend: function() { console.log('La transmisión ha terminado.'); }, onloaderror: function(id, err) { console.error('Error al cargar la transmisión:', err); }, onplayerror: function(id, err) { console.error('Error al reproducir la transmisión:', err); } }); // Inicia reproducción howler.play();
-}
-
 
 
 
@@ -168,6 +152,7 @@ function loadEqualizer() {
 
     // Se utiliza para obtener los datos de forma de onda del audio en tiempo real, lo que se conoce como datos de dominio temporal. Devuelve la representación de la señal de audio en el dominio del tiempo, es decir, cómo varía la amplitud del sonido a lo largo del tiempo.
     analyser.getByteTimeDomainData(dataArray);
+    console.log("cargado");
 }
 
 /* 
@@ -202,6 +187,7 @@ function animateEqualizer() {
 } */
 
 function animateEqualizer(color) {
+    /* console.log(dataArray); */
     // Limpia el lienzo del canvas para pintar de nuevo
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.height);
 
@@ -222,7 +208,6 @@ function animateEqualizer(color) {
         const angle = (i / (bufferLength * 0.5)) * (Math.PI * 2) - (Math.PI / 2); // Calcula el ángulo correspondiente// adaptado ya que nos e muestran todsa las frecuencias de debe multiplicar por 1/ lo reducido
         const x = centerX + Math.cos(angle) * (radius + barHeight); // Coordenada x
         const y = centerY + Math.sin(angle) * (radius + barHeight); // Coordenada y
-
         ctx.fillStyle = color; // Cambia el color de las barras según tu preferencia
         ctx.beginPath();
         ctx.moveTo(centerX, centerY); // Mueve el cursor al centro
@@ -245,10 +230,13 @@ function animateEqualizer(color) {
     document.getElementById("imagen").style.scale = total;
 
     duration = Math.floor(howler.seek());
-    if (duration > 0 && !isSecondsActive) {
-        document.getElementById("seconds").value = (duration * 100) / maxDuration;
-        console.log(document.getElementById("seconds").value);
+    if (document.getElementById("seconds")) {
+        if (duration > 0 && !isSecondsActive) {
+            document.getElementById("seconds").value = (duration * 100) / maxDuration;
+            console.log(document.getElementById("seconds").value);
+        }
     }
+
 
     // Repite la animación
     animationFrame = requestAnimationFrame(animateEqualizer);
@@ -256,9 +244,9 @@ function animateEqualizer(color) {
 
 
 
-function playSong(track) {
+/* function playSong(track) {
     console.log(track);
-}
+} */
 function ponerFoto(image) {
     let canvasContainer = document.getElementById("imgContainer");
     let imagen = document.getElementById("imagen");//si existe una imagen previa
@@ -275,7 +263,7 @@ function ponerFoto(image) {
 }
 
 function ponerTitulo(titulo, artista) {
-    
+
 }
 
 function getColor(src) {//chat gpt 
@@ -357,7 +345,7 @@ function crearInputs(title, artist) {
     secondsInput.step = "1";
     barrasContainer.appendChild(secondsInput);
     //
-   
+
     // opciones de control
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "flex-container";
@@ -403,8 +391,8 @@ function crearInputs(title, artist) {
         currentTrack--;
         if (currentTrack < 0) {
             currentTrack = playList.length - 1;
-        }
-        console.log(currentTrack);
+        }/* 
+        console.log(currentTrack); */
         cambiarPista(currentTrack);
     }, false);
     // pasar para adelante
@@ -416,8 +404,8 @@ function crearInputs(title, artist) {
         cambiarPista(currentTrack);
     }, false);
     //pausar/reanudar
-    document.getElementById("pausa").addEventListener("click", () => {
-        console.log(document.getElementById("pausa").src);
+    document.getElementById("pausa").addEventListener("click", () => {/* 
+        console.log(document.getElementById("pausa").src); */
         if (document.getElementById("pausa").classList.contains("pausa")) {
             document.getElementById("pausa").classList.remove("pausa");
             document.getElementById("pausa").classList.add("reanudar");
@@ -440,10 +428,10 @@ async function cambiarPista(number) {
     let song = playList[number]
 
     ponerFoto(song["image"]);
-    
+
     loadSongs(song["src"], song["image"]);
     // crea los inputs
-    crearInputs(song["title"],song["artist"]);
+    crearInputs(song["title"], song["artist"]);
     howler.play();
 
 

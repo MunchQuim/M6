@@ -10,6 +10,8 @@ let listadoDivQuiz = [];
 let correctas = 0;
 let incorrectas = 0;
 let btnActivo = false;
+
+
 async function prepararPreguntas() {
     let response = await fetch("https://the-trivia-api.com/api/questions?limit=" + preguntasRecogidas + "&categories=general_knowledge");
     listadoQuiz = await response.json();
