@@ -3,17 +3,18 @@ body {
     margin: 0px;
     padding: 0px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    height: 100%;
 }
 
 body {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
 header,
 footer {
-    height: 80px;
+    width: 100vw;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,7 +69,7 @@ button {
     cursor: pointer;
     border-radius: 12px;
     transition: background-color 0.3s, box-shadow 0.3s;
-    height: 60%;
+    
 }
 
 button:hover {
@@ -125,6 +126,7 @@ button:active {
 }
 
 #sideHeader {
+    padding: 0px 20px;
     height: 100px;
     display: flex;
     justify-content: space-around;
@@ -136,7 +138,8 @@ button:active {
 }
 
 #social-media {
-    height: auto;
+    width: 100%;
+    margin: 10px;
     display: flex;
     justify-content: space-around;
 
@@ -166,13 +169,13 @@ button:active {
 #songList>*,
 #radioList>* {
     scale: 0.9;
-    width: 130px;
-    height: 130px;
+    width: 80%;
+    aspect-ratio: 1/1;
     padding: 5px;
     border-radius: 20px;
     cursor: pointer;
     user-select: none;
-
+    justify-self: center;
     transition: all 0.3s ease;
 }
 
@@ -188,7 +191,9 @@ button:active {
     box-shadow: inset 0px 0px 10px black;
 }
 #sideFooter{
-    height: 80px;
+    max-height: 80px;
+    display: flex;
+    justify-content: center;
 }
 /* #radioList{
     background-color: aquamarine;
