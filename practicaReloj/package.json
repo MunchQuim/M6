@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "timezonedb": "^1.0.2"
+  }
+}
