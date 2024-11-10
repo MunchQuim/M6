@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OpenStreetMap with Leaflet</title>
+  <!-- reloj -->
+  <script src="reloj.js" defer></script>
+
+  <!-- mapa -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script><!-- mapa libreria -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /><!-- mapa libreria css-->
 
@@ -14,10 +18,15 @@
 </head>
 
 <body>
-  <div id="mapContainer">
+  <section>
     <h1>My OpenStreetMap</h1>
-    <div id="map"></div>
-  </div>
+    <div id="mapContainer">  
+      <div id="clockContainer">
+      </div>   
+      <div id="map"></div>
+    </div>
+  </section>
+
 
 
 

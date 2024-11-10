@@ -1,0 +1,38 @@
+ let clockContainer = document.getElementById("clockContainer");
+    let digitalClock = document.getElementById("digitalClock");
+    if (digitalClock) {
+        digitalClock.remove();
+    }
+    digitalClock = document.createElement("div");
+    digitalClock.id = "digitalClock";
+
+    // creamos un elemento donde poner los datos
+    let infoContainer = document.createElement("div");
+    infoContainer.id = "infoContainer";
+    // un container para horas y minutos 
+    /**/let horasMinutosContainer = document.createElement("div");
+    /**/horasMinutosContainer.id = "horasMinutosContainer";
+
+    //creamos un container para las horas
+    /******/let horasContainer = document.createElement("div");
+    /******/horasContainer.id = "horasContainer";
+    /******/horasContainer.innerHTML = "<div id='horaD'></div> <div id = 'horaU' ></div>";
+
+    //y otro para los minutos
+    /******/let minutosContainer = document.createElement("div");
+    /******/minutosContainer.id = "minutosContainer";
+    /******/minutosContainer.innerHTML = "<div id='minutoD'></div> <div id = 'minutoU' ></div>";
+    
+    /**/horasMinutosContainer.appendChild(horasContainer);
+    /**/horasMinutosContainer.appendChild(minutosContainer);
+    infoContainer.appendChild(horasMinutosContainer);
+    //y otro donde poner la fecha
+    /**/let fechaContainer = document.createElement("div");
+    /**/fechaContainer.id = "fechaContainer";
+    infoContainer.appendChild(fechaContainer);
+    digitalClock.appendChild(infoContainer);
+    // y creamos un elemento donde pondremos el boton para pasar entre 12-24h
+    let clockBtnContainer = document.createElement("div");
+    clockBtnContainer.id = "clockBtnContainer";
+    digitalClock.appendChild(clockBtnContainer);
+    clockContainer.appendChild(digitalClock);

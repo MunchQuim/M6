@@ -2,10 +2,76 @@
     height: 500px;
     width: 500px;
     border-radius: 10px;
-  }
-  #mapContainer{
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      width: 100%;
-  }
+}
+
+#mapContainer {
+    display: flex;
+    align-items: center;
+
+}
+
+#clockContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#infoContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#digitalClock {
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: black;
+
+}
+
+#horasMinutosContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#horasContainer,
+#minutosContainer {
+    display: flex;
+    width: 45%;
+    justify-content: space-between;
+}
+
+#horaD,
+#horaU,
+#minutoD,
+#minutoU {
+    height: 75px;
+    width: 45%;
+    background-size: cover;
+    background-position: center;
+}
+
+#clockBtnContainer {
+    background-color: red;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fechaContainer{
+    display: flex;
+    height: 60px;
+    width: 100%;
+    margin: 10px 0px;
+    color: dodgerblue;
+    justify-content: space-between;
+}
+#pmam{
+    visibility: hidden;
+}

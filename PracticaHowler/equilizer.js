@@ -278,7 +278,8 @@ function animateEqualizer(color) {
         ctx.lineTo(x, y); // Dibuja la línea hacia el borde // hacia el destino
         ctx.lineWidth = 2; // Grosor de la línea
         ctx.strokeStyle = color; // Cambia el color del trazo
-        ctx.stroke(); // Dibuja la línea
+        ctx.stroke(); // Dibuja la línea // el fill Style no sirve para estas barras.
+        
         total += barHeight;
         if (barHeight > maximoTotal) {
             maximoTotal = barHeight;
