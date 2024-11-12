@@ -2,6 +2,14 @@ let hora = 0;
 let minutos = 0;
 let segundos = 0;
 
+let miFecha; // fecha en formato escrito en el reloj digital
+let modoFecha = 0; // cambia la fecha entre los 3 formatos
+
+if(sessionStorage.getItem("fechaFormato") === null){
+    modoFecha = 0;
+}else{
+    modoFecha = sessionStorage.getItem("fechaFormato");
+}
 let manH = {
     angulo: 0,
     largo: 40,
@@ -24,9 +32,14 @@ let manS = {
     paso: 6
 };
 
-let fecha;
+let fecha; //fecha que devuelve la api.
+let modo; // cambia entre 12h-24h
+if(sessionStorage.getItem("modo") === null){
+    modo = true;
+}else{
+    modo = sessionStorage.getItem("modo")==='true';
+}
 
-let modo = true;
 
 let manecillas = [manH, manM, manS];
 
@@ -76,15 +89,28 @@ function crearRelojDigital() {
     /******/minutosContainer.id = "minutosContainer";
     /******/minutosContainer.innerHTML = "<div id='minutoD'></div> <div id = 'minutoU' ></div>";
 
+    //y otro para los minutos
+    /******/let segundosContainer = document.createElement("div");
+    /******/segundosContainer.id = "segundosContainer";
+    /******/segundosContainer.innerHTML = "<div id='segundoD'></div> <div id = 'segundoU' ></div>";
+
     /**/horasMinutosContainer.appendChild(horasContainer);
     /**/horasMinutosContainer.appendChild(minutosContainer);
+    /**/horasMinutosContainer.appendChild(segundosContainer);
     infoContainer.appendChild(horasMinutosContainer);
     //y otro donde poner la fecha
     /**/let fechaContainer = document.createElement("div");
     /**/fechaContainer.id = "fechaContainer";
     /******/ let pmam = document.createElement('div');
     /******/pmam.id = "pmam";
+    if (modo) {
+        pmam.style.visibility = "hidden";
+
+    } else {
+        pmam.style.visibility = "visible";
+    }
     fechaContainer.appendChild(pmam);
+
     /******/ let fecha = document.createElement('div');
     /******/fecha.id = "fecha";
     fechaContainer.appendChild(fecha);
@@ -94,50 +120,104 @@ function crearRelojDigital() {
     // y creamos un elemento donde pondremos el boton para pasar entre 12-24h
     let clockBtnContainer = document.createElement("div");
     clockBtnContainer.id = "clockBtnContainer";
-    clockBtnContainer.innerText = "24H";
-    clockBtnContainer.addEventListener("click", () => {
+    let clockBtnModo = document.createElement("button");
+
+    clockBtnModo.id = "clockBtnModo";
+    if (modo) {
+        clockBtnModo.innerText = "24H";
+
+    } else {
+        clockBtnModo.innerText = "12H";
+    }
+
+    clockBtnModo.addEventListener("click", () => {
         modo = !modo;
-        if(modo){
-            clockBtnContainer.innerText = "24H";
+        sessionStorage.setItem("modo", modo);
+        if (modo) {
+            clockBtnModo.innerText = "24H";
             document.getElementById("pmam").style.visibility = "hidden";
-        }else{
-            clockBtnContainer.innerText = "12H";
+        } else {
+            clockBtnModo.innerText = "12H";
             document.getElementById("pmam").style.visibility = "visible";
         }
         actualizarRelojDigital();
     }, false);
+
+
+
+    //le daremos el boton al modo de fecha
+
+    let clockBtnFecha = document.createElement("button");
+    clockBtnFecha.id = "clockBtnFecha";
+    clockBtnFecha.innerText = "formato";
+    if (modoFecha == 0) {
+        miFecha = time.getDate() + "/" + (time.getMonth() + 1) + "/" + time.getFullYear()
+    } else if (modoFecha == 1) {
+        miFecha = time.toLocaleDateString("es-ES", { weekday: 'long' }) + " " + time.getDate() + " de " + time.toLocaleDateString("es-ES", { month: 'long', year: 'numeric' });
+    } else {
+        modoFecha = -1;
+        miFecha = time.toLocaleDateString("es-ES", { weekday: 'short' }) + " " + time.getDate() + " de " + time.toLocaleDateString("es-ES", { month: 'short' }) + " del " + time.getFullYear().toString().substr(-2)
+    }
+
+    clockBtnFecha.addEventListener("click", () => {
+        modoFecha++;
+        if (modoFecha == 3){
+            modoFecha = 0;
+        }
+        sessionStorage.setItem("fechaFormato", modoFecha);
+        if (modoFecha == 0) {
+            miFecha = time.getDate() + "/" + (time.getMonth() + 1) + "/" + time.getFullYear()
+        } else if (modoFecha == 1) {
+            miFecha = time.toLocaleDateString("es-ES", { weekday: 'long' }) + " " + time.getDate() + " de " + time.toLocaleDateString("es-ES", { month: 'long', year: 'numeric' });
+        } else {
+            miFecha = time.toLocaleDateString("es-ES", { weekday: 'short' }) + " " + time.getDate() + " de " + time.toLocaleDateString("es-ES", { month: 'short' }) + " del " + time.getFullYear().toString().substr(-2)
+        }
+        
+        
+        actualizarRelojDigital();
+    }, false);
+    clockBtnContainer.appendChild(clockBtnModo);
+    clockBtnContainer.appendChild(clockBtnFecha);
+
     digitalClock.appendChild(clockBtnContainer);
     clockContainer.appendChild(digitalClock);
+
 
     actualizarRelojDigital();
 
 }
 function actualizarRelojDigital() {
-    if (hora >= 12){
+    if (hora >= 12) {
         document.getElementById("pmam").innerText = "PM";
-    }else{
+    } else {
         document.getElementById("pmam").innerText = "AM";
     }
 
     let horaD;
     let horaU;
-    if(modo){
-        horaD= Math.floor(hora / 10);
+    if (modo) {
+        horaD = Math.floor(hora / 10);
         horaU = hora % 10;
-    }else{
+    } else {
         horaD = Math.floor(hora % 12 / 10);
         horaU = hora % 12 % 10;
     }
     let minuD = Math.floor(minutos / 10);
     let minuU = minutos % 10;
+
+    let secD = Math.floor(segundos / 10);
+    let secU = segundos % 10;
+
+    //actualizamos la hora del reloj digital;
     document.getElementById("horaD").style.backgroundImage = `url('./imgs/${horaD}.png')`;
     document.getElementById("horaU").style.backgroundImage = `url('./imgs/${horaU}.png')`;
     document.getElementById("minutoD").style.backgroundImage = `url('./imgs/${minuD}.png')`;
     document.getElementById("minutoU").style.backgroundImage = `url('./imgs/${minuU}.png')`;
+    document.getElementById("segundoD").style.backgroundImage = `url('./imgs/${secD}.png')`;
+    document.getElementById("segundoU").style.backgroundImage = `url('./imgs/${secU}.png')`;
 
-    // imprime la fecha
-
-    document.getElementById("fecha").innerText = fecha.getDate()+"/"+(fecha.getMonth()+1)+"/"+fecha.getFullYear();
+    // imprime la fecha en el reloj digital
+    document.getElementById("fecha").innerText = miFecha;
 }
 
 function pintarCanvas(canvas, fondo) {
@@ -186,13 +266,13 @@ function pintarCanvas(canvas, fondo) {
                         getTimezone(lat, lng); // forma vaga, volver a hacer la peticion;
                     }
                 }
-                actualizarRelojDigital();
             }
+            actualizarRelojDigital();
             // actualizamos el angulo de las manecillas 
             manecillas[0].angulo = hora * manecillas[0].paso;
             manecillas[1].angulo = minutos * manecillas[1].paso;
             manecillas[2].angulo = segundos * manecillas[2].paso;
-            console.log(hora + ":" + minutos + ":" + segundos);
+            /* console.log(hora + ":" + minutos + ":" + segundos); */
             // por lo tanto el angulo es brusco, pero por ahora me vale
 
             momento += 1000; // lo actualizo a un segundo despues para que en caso de haber desincronia de  menos de 2 segundos

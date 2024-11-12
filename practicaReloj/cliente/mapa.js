@@ -1,8 +1,36 @@
+
+const EXPIRATION_TIME = 30 * 60 * 1000; // 30 minutos en milisegundos
+
+// Función para comprobar si los datos han expirado
+function isSessionExpired() {
+  
+  const timestamp = sessionStorage.getItem("timestamp");
+  if (!timestamp){
+    console.log("no existente");
+    return true; // Si no hay timestamp, significa que los datos nunca fueron guardados.
+  } 
+
+  const currentTime = new Date().getTime();
+  console.log(currentTime - timestamp > EXPIRATION_TIME);
+  return currentTime - timestamp > EXPIRATION_TIME;
+}
+
+// Verificamos si los datos han expirado o no existen
+if (isSessionExpired()|| sessionStorage.getItem("lat") === null) {
+  console.log("hola");
+  // Si los datos han expirado o no existen, los volvemos a establecer
+  sessionStorage.setItem("lat", 41.39);
+  sessionStorage.setItem("lng", 2.154007);
+  sessionStorage.setItem("timestamp", new Date().getTime()); // Guardamos el timestamp actual
+}
+
+let lat = sessionStorage.getItem("lat");
+let lng = sessionStorage.getItem("lng");
+
 let now = new Date();
-let lat = 41.39;
-let lng = 2.154007;
-let map = L.map('map').setView([lat, lng], 10);
-let key = "S8JYPFU8T5FT";
+let map = L.map('map').setView([lat, lng], 2);
+
+let key = "S8JYPFU8T5FT";// para la api de obtener el tiempo // lo pondria como variable de entorno
 let user = "munch";
 
 let data;
@@ -15,20 +43,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 map.addEventListener('click', async (event) => {
-
-  console.log("click");
   lat = event.latlng.lat;
   lng = event.latlng.lng;
+
+  sessionStorage.setItem("lat", lat);
+  sessionStorage.setItem("lng", lng);
   
   await getTimezone(lat, lng);
-
-
-
-
 }, false);
 
 async function getTimezone(lat, lng) {
-  console.log("entrando en timezone");
   const apiKey = key; // Reemplaza con tu API Key de TimeZoneDB
   const url = `http://api.timezonedb.com/v2.1/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lng}`;
   try {

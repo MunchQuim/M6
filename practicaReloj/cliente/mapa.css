@@ -36,23 +36,32 @@
 }
 
 #horasContainer,
-#minutosContainer {
+#minutosContainer,
+#segundosContainer {
     display: flex;
-    width: 45%;
+    width: 28%;
     justify-content: space-between;
 }
 
 #horaD,
 #horaU,
 #minutoD,
-#minutoU {
-    height: 75px;
+#minutoU,
+#segundoD,
+#segundoU {
+    height: 46px;
     width: 45%;
     background-size: cover;
     background-position: center;
 }
+#clockBtnContainer{
+    display: flex;
+}
 
-#clockBtnContainer {
+#fecha{
+    font-size: smaller;
+}
+#clockBtnModo {
     background-color: red;
     border-radius: 5px;
     width: 50px;
@@ -63,7 +72,17 @@
     justify-content: center;
     align-items: center;
 }
-
+#clockBtnFecha{
+    background-color: greenyellow;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #fechaContainer{
     display: flex;
     height: 60px;
@@ -72,6 +91,6 @@
     color: dodgerblue;
     justify-content: space-between;
 }
-#pmam{
+/* #pmam{
     visibility: hidden;
-}
+} */
