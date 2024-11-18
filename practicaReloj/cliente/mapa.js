@@ -3,12 +3,12 @@ const EXPIRATION_TIME = 30 * 60 * 1000; // 30 minutos en milisegundos
 
 // Función para comprobar si los datos han expirado
 function isSessionExpired() {
-  
+
   const timestamp = sessionStorage.getItem("timestamp");
-  if (!timestamp){
+  if (!timestamp) {
     console.log("no existente");
     return true; // Si no hay timestamp, significa que los datos nunca fueron guardados.
-  } 
+  }
 
   const currentTime = new Date().getTime();
   console.log(currentTime - timestamp > EXPIRATION_TIME);
@@ -16,7 +16,7 @@ function isSessionExpired() {
 }
 
 // Verificamos si los datos han expirado o no existen
-if (isSessionExpired()|| sessionStorage.getItem("lat") === null) {
+if (isSessionExpired() || sessionStorage.getItem("lat") === null) {
   console.log("hola");
   // Si los datos han expirado o no existen, los volvemos a establecer
   sessionStorage.setItem("lat", 41.39);
@@ -27,8 +27,11 @@ if (isSessionExpired()|| sessionStorage.getItem("lat") === null) {
 let lat = sessionStorage.getItem("lat");
 let lng = sessionStorage.getItem("lng");
 
-let now = new Date();
-let map = L.map('map').setView([lat, lng], 2);
+let map = L.map('map', {
+  minZoom: 3, maxZoom: 10,
+  /*   maxBounds:[[-85,-9999999],[85,9999999]],
+   */
+}).setView([lat, lng], 3);
 
 let key = "S8JYPFU8T5FT";// para la api de obtener el tiempo // lo pondria como variable de entorno
 let user = "munch";
@@ -42,13 +45,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+
 map.addEventListener('click', async (event) => {
   lat = event.latlng.lat;
   lng = event.latlng.lng;
-
   sessionStorage.setItem("lat", lat);
   sessionStorage.setItem("lng", lng);
-  
+
   await getTimezone(lat, lng);
 }, false);
 
@@ -57,24 +60,42 @@ async function getTimezone(lat, lng) {
   const url = `http://api.timezonedb.com/v2.1/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lng}`;
   try {
     const response = await fetch(url);
-    data = await response.json();
-
+    data = await response.json(); // de aqui puedo sacar el region name para el nombre de la hubicacion
+    console.log(data);
     if (data.status === "OK") {
       const formattedDateString = data.formatted.replace(" ", "T"); // Reemplazamos el espacio por "T"
       time = new Date(formattedDateString);
 
-      hora = time.getHours();
-      minutos = time.getMinutes();
-      segundos = time.getSeconds();
+      //cambiar a partir de aqui
+      //hora minutos y segundos son el tiempo local en españa
+
+      // recoger la zona horaria;
+      let zona = data.regionName;
+      countryName = data.countryName;
+      let huso = data.gmtOffset;
+      /* alert(zona); */
+
+      let ahora = new Date(Date.now());
+      let gmtPropio = 3600;
+      hora = Math.floor(ahora.getHours() - (gmtPropio / 3600) + (huso / 3600)); // es hora en utc 0
+      if (hora >= 24) {
+        hora -= 24;
+      }
+      minutos = ahora.getMinutes() + (huso % 3600 / 60); // modificar para los utc fraccionales
+      segundos = ahora.getSeconds();
+
 
       fecha = time;
 
-      manecillas[0].angulo = hora*manecillas[0].paso;
-      manecillas[1].angulo = minutos*manecillas[1].paso;
-      manecillas[2].angulo = segundos*manecillas[2].paso;
+      manecillas[0].angulo = hora * manecillas[0].paso;
+      manecillas[1].angulo = minutos * manecillas[1].paso;
+      manecillas[2].angulo = segundos * manecillas[2].paso;
 
       console.log(hora + ":" + minutos);
       //llamar a crearse el reloj;
+      let region = document.getElementById("region");
+      region.innerText = countryName +": "+zona;
+
       crearRelojAnalogico();
       crearRelojDigital();
 

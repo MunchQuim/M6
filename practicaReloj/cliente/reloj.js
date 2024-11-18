@@ -1,6 +1,6 @@
-let hora = 0;
-let minutos = 0;
-let segundos = 0;
+let hora;
+let minutos;
+let segundos;
 
 let miFecha; // fecha en formato escrito en el reloj digital
 let modoFecha = 0; // cambia la fecha entre los 3 formatos
