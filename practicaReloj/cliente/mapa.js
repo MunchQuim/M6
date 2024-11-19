@@ -94,14 +94,19 @@ async function getTimezone(lat, lng) {
       console.log(hora + ":" + minutos);
       //llamar a crearse el reloj;
       let region = document.getElementById("region");
-      region.innerText = countryName +": "+zona;
+      if(countryName != null && zona != null){
+        region.innerText = countryName +": "+zona;
+      }else{
+        region.innerText = "territorio desconocido";
+      }
+      
 
       crearRelojAnalogico();
       crearRelojDigital();
 
     } else {
       console.error("Error:", data.message);
-      alert("Para el carro, dale un momento para respirar")
+      /* alert("Para el carro, dale un momento para respirar") */
     }
   } catch (error) {
     console.error("Error en la solicitud:", error);
