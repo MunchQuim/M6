@@ -47,17 +47,18 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 map.addEventListener('click', async (event) => {
-  lat = event.latlng.lat;
-  lng = event.latlng.lng;
+  lat = Math.floor(event.latlng.lat*10000)/10000;
+  lng = Math.floor(event.latlng.lng*10000)/10000;
   sessionStorage.setItem("lat", lat);
   sessionStorage.setItem("lng", lng);
-
+  console.log(lat+":"+lng);
   await getTimezone(lat, lng);
 }, false);
 
 async function getTimezone(lat, lng) {
   const apiKey = key; // Reemplaza con tu API Key de TimeZoneDB
-  const url = `http://api.timezonedb.com/v2.1/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lng}`;
+  let url = `http://api.timezonedb.com/v2.1/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lng}`;
+  
   try {
     const response = await fetch(url);
     data = await response.json(); // de aqui puedo sacar el region name para el nombre de la hubicacion
@@ -105,14 +106,79 @@ async function getTimezone(lat, lng) {
       crearRelojDigital();
 
     } else {
-      console.error("Error:", data.message);
+      console.error("Error en la obtencion del timeZone:", data.message);
+      getTimezoneAlter(lat, lng);
       /* alert("Para el carro, dale un momento para respirar") */
     }
   } catch (error) {
     console.error("Error en la solicitud:", error);
+   
+
   }
+
 }
 
+async function getTimezoneAlter(lat, lng) {
+  let url = `https://api.geotimezone.com/public/timezone?latitude=${lat}&longitude=${lng}`;
+  
+  try {
+    fetch('https://cors-anywhere.herokuapp.com/'+url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        const formattedDateString = data['current_local_datetime'].formatted.replace(" ", "T"); // Reemplazamos el espacio por "T"
+        time = new Date(formattedDateString);
+  
+        //cambiar a partir de aqui
+        //hora minutos y segundos son el tiempo local en españa
+  
+        // recoger la zona horaria;
+        let zona = data.regionName;
+        countryName = data.countryName;
+        let huso = data.gmtOffset;
+        /* alert(zona); */
+  
+        let ahora = new Date(Date.now());
+        let gmtPropio = 3600;
+        hora = Math.floor(ahora.getHours() - (gmtPropio / 3600) + (huso / 3600)); // es hora en utc 0
+        if (hora >= 24) {
+          hora -= 24;
+        }
+        minutos = ahora.getMinutes() + (huso % 3600 / 60); // modificar para los utc fraccionales
+        segundos = ahora.getSeconds();
+  
+  
+        fecha = time;
+  
+        manecillas[0].angulo = hora * manecillas[0].paso;
+        manecillas[1].angulo = minutos * manecillas[1].paso;
+        manecillas[2].angulo = segundos * manecillas[2].paso;
+  
+        console.log(hora + ":" + minutos);
+        //llamar a crearse el reloj;
+        let region = document.getElementById("region");
+        if(countryName != null && zona != null){
+          region.innerText = countryName +": "+zona;
+        }else{
+          region.innerText = "territorio desconocido";
+        }
+        
+  
+        crearRelojAnalogico();
+        crearRelojDigital();
+  
+      })
+    
+    /* const response = await fetch('https://cors-anywhere.herokuapp.com/'+url);
+    data = await response.json(); // de aqui puedo sacar el region name para el nombre de la hubicacion */
+    
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+   
+
+  }
+
+}
 
 getTimezone(lat, lng);
 

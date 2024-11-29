@@ -15,6 +15,7 @@
     background-image: url("imgs/mapa.jpg");
     background-repeat: no-repeat;
     background-size: 1050px 860px;
+    
     padding: 25px;
     border-radius: 10px;
 }
@@ -68,7 +69,8 @@
 }
 
 #fecha{
-    font-size: smaller;
+    font-size: smaller;    
+    padding: 0px 10px;
 }
 #clockBtnModo {
     background-color: red;
