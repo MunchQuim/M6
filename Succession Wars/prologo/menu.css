@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    position: relative;
+    height: 100%;
+}
+
+.fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/menu.jpeg') no-repeat center center;
+    background-size: cover;
+    z-index: 1;
+}
+
+.contenedor {
+    top: calc(50% - 90px);
+    position: relative;
+    z-index: 3;
+    width: 240px;
+    height: 180px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(95, 4, 4, 0.938);
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+.sword {
+    position: absolute;
+    z-index: 3;
+}
+
+.reverse {
+    transform: scaleX(-1);
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.moverCentro{
+    animation: moverAlCentro 0.5s ease-out forwards;
+}
+.moverCentroRev{
+    animation: moverAlCentroRev 0.5s ease-out forwards;
+}
+
+@keyframes moverAlCentroRev {
+    0% {
+        top: -480px;
+        /* Empieza fuera de la pantalla por encima */
+        left: 320px;
+        /* Empieza fuera de la pantalla por la izquierda */
+        transform: scaleX(-1);
+    }
+
+    100% {
+        top: calc(50% - 360px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
+        left: calc(50% - 320px);
+        transform: translate(-50%, -50%);
+        /* Ajuste final para centrar completamente */
+        transform: scaleX(-1);
+    }
+}
+
+@keyframes moverAlCentro  {
+    0% {
+        top: -480px;
+        /* Empieza fuera de la pantalla por encima */
+        left: calc(1100px);
+        /* Empieza fuera de la pantalla por la derecha */
+        
+    }
+
+    100% {
+        top: calc(50% - 360px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
+        left: calc(50% - 120px);
+        /* Ajuste final para centrar completamente */
+    }
+}
