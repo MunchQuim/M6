@@ -1,0 +1,25 @@
+body,html{
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    zoom: 1;
+}
+#screen{
+    height: 100vh;
+    background-image: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+.objeto{
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.draggable{
+    cursor: pointer;
+    user-select: none;
+}
