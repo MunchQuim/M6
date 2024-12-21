@@ -45,6 +45,7 @@ main {
 
 .sword {
     position: absolute;
+    width: 300px;
     z-index: 3;
 }
 
@@ -86,14 +87,14 @@ button:hover {
     0% {
         top: -480px;
         /* Empieza fuera de la pantalla por encima */
-        left: 320px;
+        left: calc(50% - 600px);
         /* Empieza fuera de la pantalla por la izquierda */
         transform: scaleX(-1);
     }
 
     100% {
-        top: calc(50% - 360px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
-        left: calc(50% - 320px);
+        top: calc(50% - 250px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
+        left: calc(50% - 250px);
         transform: translate(-50%, -50%);
         /* Ajuste final para centrar completamente */
         transform: scaleX(-1);
@@ -104,14 +105,14 @@ button:hover {
     0% {
         top: -480px;
         /* Empieza fuera de la pantalla por encima */
-        left: calc(1100px);
+        left: calc(50% + 300px);
         /* Empieza fuera de la pantalla por la derecha */
         
     }
 
     100% {
-        top: calc(50% - 360px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
-        left: calc(50% - 120px);
+        top: calc(50% - 250px); /* Se mueve al centro vertical (ajustado por la mitad de la altura) */
+        left: calc(50% - 50px);
         /* Ajuste final para centrar completamente */
     }
 }

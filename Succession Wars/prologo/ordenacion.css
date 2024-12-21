@@ -1,0 +1,220 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    position: relative;
+    height: 100%;
+}
+img{
+    width: 20px;
+    height: 20px;
+}
+.fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/camp.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+#escaramuza,#batalla,#persecucion{
+    display: flex;
+    padding: 10px;
+}
+.texto{
+    flex-grow: 1;
+}
+.dragObjective{
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px); /* Desenfoca el contenido detrás */
+}
+.marco{
+    height: 160px;
+    aspect-ratio: 5 / 8;
+}
+#manoContainer{
+    height: 150px;
+
+    z-index: 1;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#gridCentral {
+    position: absolute;
+    background: url('../img/paper.jpg') no-repeat center center;
+    padding: 5px;
+    width: 40%;
+    height: 60%;
+    left: 30%;
+    top: 20%;
+    background-size: cover;
+    z-index: 1;
+
+    display: grid;
+    grid-template-rows: repeat(3, 180px);
+    gap: 3px;
+}
+
+.carta {
+    z-index: 3;
+    height: 100%;
+    aspect-ratio: 5 / 8;
+
+    align-self: center;
+    justify-self: center;
+}
+.draggable{
+    cursor: pointer;
+    user-select: none;
+}
+
+#data {
+    position: absolute;
+    top: 50px; /* Ajusta según lo necesites */
+    left: 50px; /* Ajusta según lo necesites */
+    width: 200px;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre filas */
+    background-color: #4b4b4bda;
+    border-radius: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 48%; /* Un poco menos de la mitad para que haya un espacio entre las columnas */
+}
+
+.image img {
+    width: 100%; /* Asegura que la imagen ocupe el 100% del tamaño de su contenedor */
+    height: auto;
+}
+
+.empty span {
+    display: flex;
+    justify-content: center;  /* Centra el texto horizontalmente */
+    align-items: center;      /* Centra el texto verticalmente */
+    width: 100%;              /* El span ocupa todo el ancho disponible */
+    height: 100px;            /* Puedes ajustar la altura según lo necesites */
+    background-color: #e2e2e256; /* Color de fondo con algo de transparencia */
+    font-size: 2em;           /* Tamaño de fuente grande */
+    font-weight: bold;        /* Hace el texto en negrita */
+    color: #ffffff;           /* Color del texto */
+    text-transform: uppercase;/* Convierte el texto a mayúsculas */
+    letter-spacing: 2px;      /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.952); /* Agrega sombra al texto */
+    border-radius: 20px;
+}
+/* boton listo */
+#listo {
+    position: absolute;
+    top: 75%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: url('../img/wooden-texture.jpg') no-repeat;
+    border-radius: 25px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    user-select: none;
+  }
+  #listo:disabled{
+    filter: grayscale(1) opacity(0.7);
+    cursor: default;
+    scale: 0.6;
+  }
+  
+  #listo:not(:disabled):hover {
+    background: url('../img/wooden-texture.jpg') no-repeat;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  
+  #listo:not(:disabled):active {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+/* cartas, podriamos hacerlo mediante js */
+#Verdugo {
+    background: url('../img/Cartas/Verdugo.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Tabernero {
+    background: url('../img/Cartas/Tabernero.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Reina {
+    background: url('../img/Cartas/Reina.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Parroco {
+    background: url('../img/Cartas/Parroco.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Paladin {
+    background: url('../img/Cartas/Paladin.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Nigromante {
+    background: url('../img/Cartas/Nigromante.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Medico {
+    background: url('../img/Cartas/Medico.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Cobrador {
+    background: url('../img/Cartas/Cobrador.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Bufon {
+    background: url('../img/Cartas/Bufon.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Alquimista {
+    background: url('../img/Cartas/Alquimista.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Herrero {
+    background: url('../img/Cartas/Herrero.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#ah {
+    background: url('../img/Cartas/Ah.jpg') no-repeat center center;
+    background-size: cover;
+}

@@ -38,6 +38,7 @@ colocacionInicial();
 
 let pantalla = document.getElementById('screen');
 let bandeja = document.getElementById('bandeja');
+
 function entrada() {
     moverObjeto('bandeja', pantalla.offsetWidth / 2 - bandeja.offsetWidth/2, pantalla.offsetHeight / 2, 2000);
     moverObjeto('copa', pantalla.offsetWidth / 2 + 185- bandeja.offsetWidth/2, pantalla.offsetHeight / 2 - 185, 2000);

@@ -1,0 +1,126 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    position: relative;
+    height: 100%;
+}
+
+.fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/wooden-texture.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+#manoContainer,#manoContainerRival{
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px); /* Desenfoca el contenido detrás */
+    z-index: 1;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+#manoContainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#gridCentral {
+    position: absolute;
+    background: url('../img/paper.jpg') no-repeat center center;
+    padding: 5px;
+    width: 40%;
+    height: 60%;
+    left: 30%;
+    top: 20%;
+    background-size: cover;
+    z-index: 1;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 180px);
+    gap: 3px;
+}
+
+.carta {
+    z-index: 3;
+    height: 100%;
+    aspect-ratio: 5 / 8;
+
+    align-self: center;
+    justify-self: center;
+}
+.draggable{
+    cursor: pointer;
+    user-select: none;
+}
+
+#Verdugo {
+    background: url('../img/Cartas/Verdugo.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Tabernero {
+    background: url('../img/Cartas/Tabernero.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Reina {
+    background: url('../img/Cartas/Reina.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Parroco {
+    background: url('../img/Cartas/Parroco.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Paladin {
+    background: url('../img/Cartas/Paladin.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Nigromante {
+    background: url('../img/Cartas/Nigromante.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Medico {
+    background: url('../img/Cartas/Medico.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Cobrador {
+    background: url('../img/Cartas/Cobrador.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Bufon {
+    background: url('../img/Cartas/Bufon.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Alquimista {
+    background: url('../img/Cartas/Alquimista.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#Herrero {
+    background: url('../img/Cartas/Herrero.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+#ah {
+    background: url('../img/Cartas/Ah.jpg') no-repeat center center;
+    background-size: cover;
+}

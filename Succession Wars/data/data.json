@@ -1,0 +1,350 @@
+{
+    "Eminencias": {
+        "Parroco": {
+            "origen": "noble",
+            "rol": "Párroco",
+            "personalizado": "john victoria",
+            "descripciones": {
+                "fase1": "Persistente: moral -15 al enemigo",
+                "fase2": "Persistente: moral -15 al enemigo",
+                "fase3": "Persistente: moral +10 salvaguardia 5% a las tropas propias"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 2,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Bufon": {
+            "origen": "noble",
+            "rol": "Bufón de la corte",
+            "personalizado": "lluc",
+            "descripciones": {
+                "fase1": "Obtiene los efectos de una eminencia aleatoria",
+                "fase2": "Obtiene los efectos de una eminencia aleatoria",
+                "fase3": "Obtiene los efectos de una eminencia aleatoria"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 1,
+                    "caras": 6
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 1,
+                    "caras": 6
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 1,
+                    "caras": 6
+                }
+            }
+        },
+        "Reina": {
+            "origen": "noble",
+            "rol": "Reina regente",
+            "personalizado": "Alexia",
+            "descripciones": {
+                "fase1": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos",
+                "fase2": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos",
+                "fase3": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 10,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 5,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Paladin": {
+            "origen": "noble",
+            "rol": "Paladín",
+            "personalizado": "hector cornella",
+            "descripciones": {
+                "fase1": "Persistente: salvaguardia 5% armadura +1, moral +10 mientras el paladín está en el campo de batalla",
+                "fase2": "Persistente: salvaguardia 5% armadura +1, moral +5 mientras el paladín está en el campo de batalla",
+                "fase3": "Persistente: salvaguardia 5% moral +2 mientras el paladín está en el campo de batalla"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 5,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 1,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Herrero": {
+            "origen": "villano",
+            "rol": "Herrero",
+            "personalizado": "Javi",
+            "descripciones": {
+                "fase1": "Persistente: armadura y arma +1",
+                "fase2": "Persistente: armadura y arma +2",
+                "fase3": "Persistente: armadura y arma +3"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 10,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Nigromante": {
+            "origen": "villano",
+            "rol": "Nigromante",
+            "personalizado": "Roberto",
+            "descripciones": {
+                "fase1": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie",
+                "fase2": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie",
+                "fase3": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Tabernero": {
+            "origen": "villano",            
+            "rol": "Tabernero",
+            "personalizado": "pol",
+            "descripciones": {
+                "fase1": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida",
+                "fase2": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida",
+                "fase3": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 10,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 20,
+                    "caras": 1
+                }
+            }
+        },
+        "Cobrador": {
+            "origen": "villano",            
+            "rol": "Cobrador de impuestos",
+            "personalizado": "pau blanco",
+            "descripciones": {
+                "fase1": "Persistente: cada tropa enemiga, 50% reducir 1 arma y -5 moral, 50% reducir 1 armadura y -5 moral",
+                "fase2": "Persistente: cada tropa enemiga, 50% reducir 1 arma y -5 moral, 50% reducir 1 armadura y -5 moral",
+                "fase3": "Persistente: cada tropa enemiga, 50% reducir 2 arma y -10 moral, 50% reducir 2 armadura y -10 moral"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 1,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 5,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 0,
+                    "caras": 1
+                }
+            }
+        },
+        "Alquimista": {
+            "origen": "campesino",
+            "rol": "Alquimista",
+            "personalizado": "pau cano",
+            "descripciones": {
+                "fase1": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias",
+                "fase2": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias",
+                "fase3": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 35,
+                    "caras": 1
+                }
+            }
+        },
+        "Medico": {
+            "origen": "campesino",
+            "rol": "Médico de la plaga",
+            "personalizado": "Quim",
+            "descripciones": {
+                "fase1": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida",
+                "fase2": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida",
+                "fase3": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 2,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 25,
+                    "caras": 1
+                }
+            }
+        },
+        "Verdugo": {
+            "origen": "campesino",            
+            "rol": "Verdugo",
+            "personalizado": "facundo",
+            "descripciones": {
+                "fase1": "Persistente: moral enemiga -5 arma +1, mientras el verdugo está en el campo de batalla",
+                "fase2": "Persistente: moral enemiga -10 arma +1, mientras el verdugo está en el campo de batalla",
+                "fase3": "Persistente: moral enemiga -15 arma +1, mientras el verdugo está en el campo de batalla"
+            },
+            "funciones": {},
+            "tropas": {
+                "caballero": {
+                    "tipo": "caballero",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "soldado": {
+                    "tipo": "soldado",
+                    "cantidad": 0,
+                    "caras": 1
+                },
+                "campesino": {
+                    "tipo": "campesino",
+                    "cantidad": 15,
+                    "caras": 1
+                }
+            }
+        }
+    },
+    "Tropas": {
+        "caballero": {
+            "vida": 6,
+            "moral": 50,
+            "armadura": 4,
+            "arma": 6
+        },
+        "soldado": {
+            "vida": 5,
+            "moral": 40,
+            "armadura": 2,
+            "arma": 3
+        },
+        "campesino": {
+            "vida": 4,
+            "moral": 30,
+            "armadura": 1,
+            "arma": 1
+        },
+        "verdugo": {
+            "vida": 30,
+            "moral": 50,
+            "armadura": 5,
+            "arma": 10
+        },
+        "paladin": {
+            "vida": 30,
+            "moral": 70,
+            "armadura": 6,
+            "arma": 8
+        },
+        "zombie": {
+            "vida": 2,
+            "moral": 30,
+            "armadura": 0,
+            "arma": 1
+        }
+    }
+}

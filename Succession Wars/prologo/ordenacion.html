@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="ordenacion.css">
+    <script src="ordenacion.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <div class="fondo" id="fondo">
+            <div id="gridCentral">
+                <div id="escaramuza">
+                    <div class="texto"><strong>Escaramuza </strong><img src="../img/triangle.png" alt="triangle"><br>
+                    Esta es la primera fase y terminará en cuanto alguno de los 2 ejercitos pierda 1/3 de sus tropas.<br><br>             
+                    <span></span></div>
+                    <div class="dragObjective marco" id="mEscaramuza"></div>
+                </div>
+                <div id="batalla">
+                    <div class="texto"><strong>Batalla</strong> <img src="../img/square.png" alt="square"><br>
+                        Esta es la segunda fase y continuará hasta que alguno de los 2 ejercitos pierda 2/3 de sus tropas.<br><br>               
+                        <span></span></div>
+                    <div class="dragObjective marco" id="mBatalla"></div>
+                </div>
+                <div id="persecucion">
+                    <div class="texto"><strong>Persecución</strong> <img src="../img/pentagon.png" alt="pentagon"><br>
+                        Esta es la fase final, no habra perdón para los traidores, solo terminara cuando uno de los 2 ejercitos sea completamente aniquilado.<br><br>                
+                        <span></span></div>
+                    <div class="dragObjective marco" id="mPersecucion"></div>
+                </div>
+            </div>
+            <div id="data">
+                <div class="row">
+                    <div class="column image">
+                        <img src="../img/caballero.png" alt="Imagen 1">
+                    </div>
+                    <div class="column empty">
+                        <span id="numKnight"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column image">
+                        <img src="../img/soldado.png" alt="Imagen 2">
+                    </div>
+                    <div class="column empty">
+                        <span id="numSoldier"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column image">
+                        <img src="../img/campesino.png" alt="Imagen 3">
+                    </div>
+                    <div class="column empty">
+                        <span id="numPeasant"></span>
+                    </div>
+                </div>
+            </div>
+            <button id="listo" disabled> Listo </button>
+            <div id="manoContainer" class="dragObjective">
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

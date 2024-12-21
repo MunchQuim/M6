@@ -1,3 +1,8 @@
+let continuar = document.getElementById('iniciar');
+
+continuar.addEventListener('click',()=>{
+window.location.href = 'seleccion.html';
+},false);
 let espadas = document.querySelectorAll('.sword');
 
 function moverEspadas(){
