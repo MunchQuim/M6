@@ -1,0 +1,70 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    position: relative;
+    height: 100%;
+}
+
+.fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/battlefield.png') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.ejercito {
+    position: absolute;
+    width: 500px;
+    height: 200px;
+    border-radius: 2px;
+    outline: dotted 3px black;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+.datacard{
+    position: absolute;
+    width: 250px;
+    height: 400px;
+    border-radius: 2px;
+    background: url('../img/paper.jpg')no-repeat center center;
+    z-index: 1;
+}
+#datacardP{
+    bottom: 0px;
+    right: 0px;
+}
+
+.ejercito span{
+    display: flex;
+    justify-content: center;  /* Centra el texto horizontalmente */
+    align-items: center;      /* Centra el texto verticalmente */
+    width: 100%;              /* El span ocupa todo el ancho disponible */
+    height: 100%;            /* Puedes ajustar la altura según lo necesites */
+    font-size: 8em;           /* Tamaño de fuente grande */
+    font-weight: bold;        /* Hace el texto en negrita */
+    color: #ffffff;           /* Color del texto */
+    text-transform: uppercase;/* Convierte el texto a mayúsculas */
+    letter-spacing: 2px;      /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.952); /* Agrega sombra al texto */
+    border-radius: 20px;
+}
+
+#ejercitoP {
+    background-color: rgba(33, 158, 216, 0.514);
+    bottom: 0px;
+}
+
+#ejercitoR {
+    background-color: rgba(190, 46, 46, 0.514);
+}

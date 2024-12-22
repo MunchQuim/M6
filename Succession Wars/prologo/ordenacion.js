@@ -59,7 +59,7 @@ function listo() {
     sessionStorage.setItem('eminenciasFases', JSON.stringify(eminenciasFases));
 
     // voy a la batalla
-   /*  window.location.href = 'batalla.html'; */
+    window.location.href = 'batalla.html';
 }
 //observador que añadira la informacion que pertoque
 

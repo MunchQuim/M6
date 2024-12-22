@@ -314,37 +314,49 @@
             "vida": 6,
             "moral": 50,
             "armadura": 4,
-            "arma": 6
+            "arma": 6,
+            "salvaguardia":0,
+            "vuln_veneno":1
         },
         "soldado": {
             "vida": 5,
             "moral": 40,
             "armadura": 2,
-            "arma": 3
+            "arma": 3,
+            "salvaguardia":0,
+            "vuln_veneno":1
         },
         "campesino": {
             "vida": 4,
             "moral": 30,
             "armadura": 1,
-            "arma": 1
+            "arma": 1,
+            "salvaguardia":0,
+            "vuln_veneno":1
         },
         "verdugo": {
             "vida": 30,
             "moral": 50,
             "armadura": 5,
-            "arma": 10
+            "arma": 10,
+            "salvaguardia":0,
+            "vuln_veneno":1
         },
         "paladin": {
             "vida": 30,
             "moral": 70,
             "armadura": 6,
-            "arma": 8
+            "arma": 8,
+            "salvaguardia":5,
+            "vuln_veneno":1
         },
         "zombie": {
             "vida": 2,
             "moral": 30,
             "armadura": 0,
-            "arma": 1
+            "arma": 1,
+            "salvaguardia":5,
+            "vuln_veneno":0
         }
     }
 }
