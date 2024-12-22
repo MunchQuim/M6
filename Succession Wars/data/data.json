@@ -3,13 +3,14 @@
         "Parroco": {
             "origen": "noble",
             "rol": "Párroco",
-            "personalizado": "john victoria",
+            "personalizado": "John Victoria el ",
             "descripciones": {
                 "fase1": "Persistente: moral -15 al enemigo",
                 "fase2": "Persistente: moral -15 al enemigo",
                 "fase3": "Persistente: moral +10 salvaguardia 5% a las tropas propias"
             },
             "funciones": {},
+            "imagen": "Parroco.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -31,13 +32,14 @@
         "Bufon": {
             "origen": "noble",
             "rol": "Bufón de la corte",
-            "personalizado": "lluc",
+            "personalizado": "Lluc el ",
             "descripciones": {
                 "fase1": "Obtiene los efectos de una eminencia aleatoria",
                 "fase2": "Obtiene los efectos de una eminencia aleatoria",
                 "fase3": "Obtiene los efectos de una eminencia aleatoria"
             },
             "funciones": {},
+            "imagen": "Bufon.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -59,13 +61,14 @@
         "Reina": {
             "origen": "noble",
             "rol": "Reina regente",
-            "personalizado": "Alexia",
+            "personalizado": "Alexia Rueda la ",
             "descripciones": {
                 "fase1": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos",
                 "fase2": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos",
                 "fase3": "Evento: elimina la eminencia de esta fase, impidiendo que surjan sus efectos"
             },
             "funciones": {},
+            "imagen": "Reina.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -87,13 +90,14 @@
         "Paladin": {
             "origen": "noble",
             "rol": "Paladín",
-            "personalizado": "hector cornella",
+            "personalizado": "Hector cornella el ",
             "descripciones": {
                 "fase1": "Persistente: salvaguardia 5% armadura +1, moral +10 mientras el paladín está en el campo de batalla",
                 "fase2": "Persistente: salvaguardia 5% armadura +1, moral +5 mientras el paladín está en el campo de batalla",
                 "fase3": "Persistente: salvaguardia 5% moral +2 mientras el paladín está en el campo de batalla"
             },
             "funciones": {},
+            "imagen": "Paladin.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -115,13 +119,14 @@
         "Herrero": {
             "origen": "villano",
             "rol": "Herrero",
-            "personalizado": "Javi",
+            "personalizado": "Javi el ",
             "descripciones": {
                 "fase1": "Persistente: armadura y arma +1",
                 "fase2": "Persistente: armadura y arma +2",
                 "fase3": "Persistente: armadura y arma +3"
             },
             "funciones": {},
+            "imagen": "Herrero.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -143,13 +148,14 @@
         "Nigromante": {
             "origen": "villano",
             "rol": "Nigromante",
-            "personalizado": "Roberto",
+            "personalizado": "Roberto el ",
             "descripciones": {
                 "fase1": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie",
                 "fase2": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie",
                 "fase3": "Evento: cada tropa muerta de ambos bandos 25% probabilidades de unirse a tu bando como zombie"
             },
             "funciones": {},
+            "imagen": "Nigromante.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -171,13 +177,14 @@
         "Tabernero": {
             "origen": "villano",            
             "rol": "Tabernero",
-            "personalizado": "pol",
+            "personalizado": "Pol el ",
             "descripciones": {
                 "fase1": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida",
                 "fase2": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida",
                 "fase3": "Persistente: cada tropa + 20 moral, 20% probabilidad de -2 vida, 5% -3 vida"
             },
             "funciones": {},
+            "imagen": "Tabernero.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -199,13 +206,14 @@
         "Cobrador": {
             "origen": "villano",            
             "rol": "Cobrador de impuestos",
-            "personalizado": "pau blanco",
+            "personalizado": "Pau Blanco el ",
             "descripciones": {
                 "fase1": "Persistente: cada tropa enemiga, 50% reducir 1 arma y -5 moral, 50% reducir 1 armadura y -5 moral",
                 "fase2": "Persistente: cada tropa enemiga, 50% reducir 1 arma y -5 moral, 50% reducir 1 armadura y -5 moral",
                 "fase3": "Persistente: cada tropa enemiga, 50% reducir 2 arma y -10 moral, 50% reducir 2 armadura y -10 moral"
             },
             "funciones": {},
+            "imagen": "Cobrador.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -227,13 +235,14 @@
         "Alquimista": {
             "origen": "campesino",
             "rol": "Alquimista",
-            "personalizado": "pau cano",
+            "personalizado": "Pau Cano el ",
             "descripciones": {
                 "fase1": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias",
                 "fase2": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias",
                 "fase3": "Evento: Cada tropa sufre 1d8 de daño venenoso, 15% de afectar a tropas propias"
             },
             "funciones": {},
+            "imagen": "Alquimista.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -255,13 +264,14 @@
         "Medico": {
             "origen": "campesino",
             "rol": "Médico de la plaga",
-            "personalizado": "Quim",
+            "personalizado": "Quim Pineda el ",
             "descripciones": {
                 "fase1": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida",
                 "fase2": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida",
                 "fase3": "Persistente: inmunidad a daño venenoso, campesino +2 vida, soldado +1 vida"
             },
             "funciones": {},
+            "imagen": "Medico.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -283,13 +293,14 @@
         "Verdugo": {
             "origen": "campesino",            
             "rol": "Verdugo",
-            "personalizado": "facundo",
+            "personalizado": "Facundo el ",
             "descripciones": {
                 "fase1": "Persistente: moral enemiga -5 arma +1, mientras el verdugo está en el campo de batalla",
                 "fase2": "Persistente: moral enemiga -10 arma +1, mientras el verdugo está en el campo de batalla",
                 "fase3": "Persistente: moral enemiga -15 arma +1, mientras el verdugo está en el campo de batalla"
             },
             "funciones": {},
+            "imagen": "Verdugo.jpg",
             "tropas": {
                 "caballero": {
                     "tipo": "caballero",
@@ -314,7 +325,7 @@
             "vida": 6,
             "moral": 50,
             "armadura": 4,
-            "arma": 6,
+            "arma": 4,
             "salvaguardia":0,
             "vuln_veneno":1
         },
@@ -322,7 +333,7 @@
             "vida": 5,
             "moral": 40,
             "armadura": 2,
-            "arma": 3,
+            "arma": 2,
             "salvaguardia":0,
             "vuln_veneno":1
         },

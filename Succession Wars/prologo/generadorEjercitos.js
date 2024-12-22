@@ -2,6 +2,9 @@ let tropas = JSON.parse(sessionStorage.getItem('tropas'));
 let tropasRival = JSON.parse(sessionStorage.getItem('tropasRival'));
 let data = JSON.parse(sessionStorage.getItem('data'));
 
+let ejercito = [];
+let ejercitoRival = [];
+let muertos = [];
 
 class Tropa {
     arma;
@@ -13,7 +16,7 @@ class Tropa {
     vuln_veneno;
     tipo;
     arrayRef;
-    constructor(vida, arma, armadura, moral, salvaguardia, vuln_veneno, tipo) {
+    constructor(vida, arma, armadura, moral, salvaguardia, vuln_veneno, tipo, array) {
         this.vida = vida;
         this.vida_max = vida;
         this.arma = arma;
@@ -22,6 +25,7 @@ class Tropa {
         this.salvaguardia = salvaguardia;
         this.vuln_veneno = vuln_veneno;
         this.tipo = tipo;
+        this.arrayRef = array;
     };
     combate(ejercitoEnemigo) {
         if (this.vida > 0) {
@@ -29,6 +33,7 @@ class Tropa {
             if (this.checkeoMoral()) {
                 //escoge una tropa rival
                 let ir = Math.floor(Math.random() * ejercitoEnemigo.length);
+                /* console.log('la tropa ataca'); */
                 //dependiendo del arma y armadura hace mas o menos daño;
                 if (ejercitoEnemigo[ir]['armadura'] <= this.arma) { //si hay 0 0 evitamos tener que divir entre 0
                     //hace daño a la tropa
@@ -47,14 +52,8 @@ class Tropa {
     checkeoMoral() {
         let tirada = Math.floor(Math.random() * 100) + 1;
         if (tirada <= this.moral) {
-            setTimeout(() => {
-                console.log(this+' ha pasado un chequeo de moral');
-              }, 1000);
             return true;
         } else {
-            setTimeout(() => {
-                console.log(this+' ha pasado un chequeo de moral');
-              }, 1000);
             return false;
         }
         
@@ -73,23 +72,21 @@ class Tropa {
         this.vida = Math.min(this.vida + cura, this.vida_max);
     }
     morir() {
+        /* console.log('la tropa atacada ha muerto'); */
         this.enMuerte();
-        //si hay problemas de memoria cambiar esto
-        let index = this.arrayRef.indexOf(this);
-        if (index !== -1) {
-            this.arrayRef.splice(index, 1);
-            this.array = muertos;
-            /*let indexEjercito = ejercito.indexOf(this);
-            let indexEjercitoRival = ejercitoRival.indexOf(this);
     
-            if (indexEjercito !== -1) {
-                ejercito.splice(indexEjercito, 1); 
-            } else if (indexEjercitoRival !== -1) {
-                ejercitoRival.splice(indexEjercitoRival, 1); 
-            } */
+        // Verifica que arrayRef está definido
+        if (this.arrayRef) {
+            let index = this.arrayRef.indexOf(this);
+            if (index !== -1) {
+                this.arrayRef.splice(index, 1); // Elimina la tropa del array original
+            }
+        }
+    
+        // Agrega la tropa a la lista de muertos
+        if (typeof muertos !== 'undefined' && Array.isArray(muertos)) {
             muertos.push(this);
         }
-
     }
     enMuerte(){
 
@@ -97,38 +94,28 @@ class Tropa {
 }
 
 
-let ejercito = [];
-let ejercitoRival = [];
-let muertos = [];
+
 
 for (const tropa in tropas) {
     const cantidad = tropas[tropa];
-    let t = data['Tropas'][tropa];
-    let newTropa = new Tropa(t['vida'], t['arma'], t['armadura'], t['moral'], t['salvaguardia'], t['vuln_veneno'], tropa);
-    newTropa.arrayRef = ejercito;
-    //creo un array de la cantidad correspondiente
-    let array = Array(cantidad).fill(newTropa);
-    //meto el array dentro del ejercito
-    ejercito.push(...array);
+    for (let index = 0; index < cantidad; index++) {
+        let t = data['Tropas'][tropa];
+        let newTropa = new Tropa(t['vida'], t['arma'], t['armadura'], t['moral'], t['salvaguardia'], t['vuln_veneno'], tropa, ejercito);
+        ejercito.push(newTropa);
+    }
 }
 //reorganizamos el ejercito;
 ejercito.sort(() => Math.random() - 0.5);
 
 for (const tropa in tropasRival) {
     const cantidad = tropasRival[tropa];
-    let t = data['Tropas'][tropa];
-    let newTropa = new Tropa(t['vida'], t['arma'], t['armadura'], t['moral'], t['salvaguardia'], t['vuln_veneno'], tropa);
-    newTropa.arrayRef = ejercito;
-    //creo un array de la cantidad correspondiente
-    let array = Array(cantidad).fill(newTropa);
-    //meto el array dentro del ejercito
-    ejercitoRival.push(...array);
+    for (let index = 0; index < cantidad; index++) {
+        let t = data['Tropas'][tropa];
+        let newTropa = new Tropa(t['vida'], t['arma'], t['armadura'], t['moral'], t['salvaguardia'], t['vuln_veneno'], tropa, ejercitoRival);
+        ejercitoRival.push(newTropa);
+    }
 }
 ejercitoRival.sort(() => Math.random() - 0.5);
-console.log(ejercito[1]);
-
-
-
 
 
 
