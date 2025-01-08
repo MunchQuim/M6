@@ -6,5 +6,6 @@ async function recogerDatos() {
     data = await response.json();
     sessionStorage.setItem('data',JSON.stringify(data));
     console.log(data);
+    document.getElementById('iniciar').disabled = false;
 }
 recogerDatos();

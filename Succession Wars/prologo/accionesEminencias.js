@@ -1,4 +1,7 @@
 /* let data = JSON.parse(sessionStorage.getItem('data')); */
+if(sessionStorage.getItem('eminenciasFasesRival') == null || sessionStorage.getItem('eminenciasFases') == null){
+    window.location.href = 'ordenacion.html';
+}
 let eminenciasFasesRival = JSON.parse(sessionStorage.getItem('eminenciasFasesRival'));
 let eminenciasFases = JSON.parse(sessionStorage.getItem('eminenciasFases'));
 

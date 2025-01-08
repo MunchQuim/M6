@@ -1,3 +1,6 @@
+if(sessionStorage.getItem('tropas') == null || sessionStorage.getItem('tropasRival') == null || sessionStorage.getItem('data') == null){
+    window.location.href = 'ordenacion.html';
+}
 let tropas = JSON.parse(sessionStorage.getItem('tropas'));
 let tropasRival = JSON.parse(sessionStorage.getItem('tropasRival'));
 let data = JSON.parse(sessionStorage.getItem('data'));

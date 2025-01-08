@@ -1,3 +1,6 @@
+if(sessionStorage.getItem('data') != null){
+    window.location.href = 'menu.html';
+}
 let turno = true;
 let mouseX;
 let mouseY;

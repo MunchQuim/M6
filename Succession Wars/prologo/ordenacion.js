@@ -1,3 +1,7 @@
+if(sessionStorage.getItem('data') == null || sessionStorage.getItem('eminenciasRival') == null || sessionStorage.getItem('eminenciasPropias') == null ){
+    window.location.href = 'seleccion.html';
+}
+
 let data = JSON.parse(sessionStorage.getItem('data'));
 let manoPropia = document.getElementById('manoContainer');
 let eminenciasRival = JSON.parse(sessionStorage.getItem('eminenciasRival'));
