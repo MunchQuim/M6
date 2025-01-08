@@ -1,4 +1,4 @@
-if(sessionStorage.getItem('data') != null){
+if(sessionStorage.getItem('data') == null){
     window.location.href = 'menu.html';
 }
 let turno = true;
