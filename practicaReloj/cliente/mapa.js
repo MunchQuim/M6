@@ -79,10 +79,16 @@ async function getTimezone(lat, lng) {
       let ahora = new Date(Date.now());
       let gmtPropio = 3600;
       hora = Math.floor(ahora.getHours() - (gmtPropio / 3600) + (huso / 3600)); // es hora en utc 0
+
+      
+      minutos = ahora.getMinutes() + (huso % 3600 / 60); // modificar para los utc fraccionales
+      if(minutos>=60){
+        minutos -= 60;
+        hora++;
+      }
       if (hora >= 24) {
         hora -= 24;
       }
-      minutos = ahora.getMinutes() + (huso % 3600 / 60); // modificar para los utc fraccionales
       segundos = ahora.getSeconds();
 
 
@@ -92,7 +98,7 @@ async function getTimezone(lat, lng) {
       manecillas[1].angulo = minutos * manecillas[1].paso;
       manecillas[2].angulo = segundos * manecillas[2].paso;
 
-      console.log(hora + ":" + minutos);
+      /* console.log(hora + ":" + minutos); */
       //llamar a crearse el reloj;
       let region = document.getElementById("region");
       if(countryName != null && zona != null){
