@@ -6,7 +6,7 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: false,
         },
     },
     scene: {
@@ -21,6 +21,7 @@ new Phaser.Game(config);
 let enemies;
 let proyectiles;
 let player;
+let scoreMultiplier = 1;
 function preload() {
     //background
     //4 mas lejano
@@ -112,42 +113,29 @@ function create() {
         callbackScope: this,
         loop: true
     });
+    this.eventoPuntuacion = this.time.addEvent({
+        delay: 1000,
+        callback: () => {
+            if (player.vida > 0) {
+                scorePuntuation();
+            } else {
+                // Detener el evento si la condición es falsa
+                this.eventoPuntuacion.remove();
+            }
+        },
+        callbackScope: this,
+        loop: true
+    });
 
     this.physics.add.collider(player, enemies, (player, enemy) => {
 
         if (!player.invencible) {
             enemy.destroy();
-    
-            if (player.vida - 1 > 0) {
-                player.vida--;
-                player.invencible = true;
-                
-                player.body.checkCollision.none = true;
-    
-                const parpadeo = setInterval(() => {
-                    player.setVisible(!player.visible);
-                }, 300);
-                
 
-                setTimeout(() => {
-                    clearInterval(parpadeo);
-                    player.invencible = false;
-                    player.setVisible(true);
-                    player.body.checkCollision.none = false; 
-                }, 2100);
-            } else {
-                player.anims.play('animExplosion1', true);
-                player.body.checkCollision.none = true; 
-    
-                setTimeout(() => {
-                    player.vida--;
-                    player.destroy();
-                    gameOver(this);
-                }, 1000);
-            }
+            jugadorDaño(this);
         }
     });
-    this.physics.add.collider(proyectiles, enemies, (proyectil, enemy) => {
+    this.physics.add.overlap(proyectiles, enemies, (proyectil, enemy) => {
         if (proyectil.isFriendly) {
             proyectil.anims.play('animExplosion1', true);
             enemy.anims.play('animExplosion1', true);
@@ -160,51 +148,25 @@ function create() {
             }, 500);
 
             player.score += 50;
+        } else {
+            this.physics.world.removeCollider(proyectil.body.collider);
         }
     });
-    this.physics.add.collider(player, proyectiles, (player, proyectil) => {
+
+    this.physics.add.overlap(player, proyectiles, (player, proyectil) => {
 
         if (!player.invencible && !proyectil.isFriendly) {
             player.invencible = true;
-    
+
             // Reproducción de animación y desactivación del proyectil
             proyectil.anims.play('animExplosion1', true);
             proyectil.body.enable = false;
             setTimeout(() => {
                 proyectil.destroy();
             }, 500);
-    
+
             // Si al jugador le queda más de 1 punto de vida
-            if (player.vida - 1 > 0) {
-                player.vida--;
-                
-                // Desactivar colisiones del jugador
-                player.body.checkCollision.none = true;
-    
-                // Iniciar parpadeo
-                const parpadeo = setInterval(() => {
-                    player.setVisible(!player.visible);
-                }, 300);
-    
-                // Reactivar colisiones y detener parpadeo después de 2.1 segundos
-                setTimeout(() => {
-                    clearInterval(parpadeo);
-                    player.invencible = false;
-                    player.setVisible(true);
-                    player.body.checkCollision.none = false; // Reactivar colisiones
-                }, 2100);
-            } else {
-                // Si el jugador no tiene vidas restantes
-                player.anims.play('animExplosion1', true);
-    
-                // Desactivar colisiones y eliminar al jugador
-                player.body.checkCollision.none = true; // Desactivar colisiones para evitar conflictos
-                setTimeout(() => {
-                    player.vida--;
-                    player.destroy();
-                    gameOver(this);
-                }, 1000);
-            }
+            jugadorDaño(this);
         }
     });
 
@@ -221,7 +183,7 @@ function create() {
             d: Phaser.Input.Keyboard.KeyCodes.D,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE,
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
-            spawn: Phaser.Input.Keyboard.KeyCodes.R,
+            hurt: Phaser.Input.Keyboard.KeyCodes.R,
 
         }
     );
@@ -255,8 +217,23 @@ function update() {
 }
 function moverFondo(escena, jugadorY) {
 
-    let altura = ((escena.sys.game.config.height / 4 - jugadorY) / escena.sys.game.config.height + 1) * 4;
-
+    let altura = ((config.height / 4 - jugadorY) / config.height + 1) * 4;
+    scoreMultiplier;
+    const mitadAltura = config.height / 2+24;
+    const maxY = config.height - 24;
+    
+    // Calcular el valor de scoreMultiplier
+    if (jugadorY <= mitadAltura) {
+        // A medida que jugadorY se acerca a mitadAltura, scoreMultiplier se aproxima a 10
+        scoreMultiplier = 10 - (mitadAltura - jugadorY) / mitadAltura * 9;
+    } else if (jugadorY >= maxY) {
+        // Si jugadorY es mayor o igual a maxY, scoreMultiplier es 1
+        scoreMultiplier = 1;
+    } else {
+        // Si jugadorY está entre mitadAltura y maxY, interpolamos linealmente entre 10 y 1
+        scoreMultiplier = 10 - ((jugadorY - mitadAltura) / (maxY - mitadAltura)) * 9;
+    }
+    console.log(scoreMultiplier);
     escena.background4.tilePositionY -= 0.1 * altura;
     escena.background3.tilePositionY -= 0.5 * altura;
     escena.background2.tilePositionY -= 1 * altura;
@@ -300,6 +277,9 @@ function actualizarPersonaje(escena) {
                 }, 1000 / player.dps);
             }
         }
+        /*         if (escena.keys.hurt.isDown && !player.invencible) {
+                    jugadorDaño(escena);
+                } */
     }
 
 }
@@ -314,10 +294,13 @@ function disparo(escena, isFriend, x, y) {
     proyectiles.add(disparo);
 
 }
+function scorePuntuation() {
 
+    player.score += Math.floor(2 * scoreMultiplier);
+}
 function spawnEnemy() {
     if (player.vida > 0) {
-        let cantidad = Phaser.Math.Between(1, Math.min(Math.floor(player.score/100)+2,10));
+        let cantidad = Phaser.Math.Between(1, Math.min(Math.floor(player.score / 100) + 2, 10));
         const randomPattern = Phaser.Math.Between(1, 2); // Selecciona un patrón aleatorio
         let enemy;
 
@@ -350,6 +333,50 @@ async function checkSalida(elemento) {
         elemento.destroy();
     }
 }
+
+//jugador sufre daño
+function jugadorDaño(escena) {
+    player.invencible = true;
+
+    // Si al jugador le queda más de 1 punto de vida
+    if (player.vida - 1 > 0) {
+        player.vida--;
+
+        // Desactivar colisiones del jugador
+        player.body.checkCollision.none = true;
+
+        // Iniciar parpadeo
+        const parpadeo = setInterval(() => {
+            player.setVisible(!player.visible);
+        }, 300);
+
+        // Reactivar colisiones y detener parpadeo después de 2.1 segundos
+        setTimeout(() => {
+            clearInterval(parpadeo);
+            player.invencible = false;
+            player.setVisible(true);
+            player.body.checkCollision.none = false; // Reactivar colisiones
+        }, 2100);
+    } else {
+        // Si el jugador no tiene vidas restantes
+        player.vida--;
+        player.body.checkCollision.none = true;
+        player.anims.play('animExplosion1', true);
+        player.on('animationcomplete', () => {
+            player.destroy();
+            setTimeout(() => {
+                gameOver(escena);
+            }, 500);
+
+        })
+        // Desactivar colisiones y eliminar al jugador
+        // Desactivar colisiones para evitar conflictos
+
+    }
+
+}
+
+
 //////////////////////////
 // Clases de enemigos
 //////////////////////////
